@@ -23,7 +23,10 @@ namespace ShoppingCart_Team7
             SeedUsers();
             SeedProducts();
             SeedProducts1();
-            // SeedPurchase();
+            SeedPurchase();
+            SeedReview();
+            SeedSession();
+            SeedCart();
         }
 
         public void SeedUsers()
@@ -141,13 +144,93 @@ namespace ShoppingCart_Team7
                 Purchase purchase1 = new Purchase
                 {
                     PurchaseDate = new DateTime(2021, 10, 1, 9, 0, 0, DateTimeKind.Local),
-                    ActivationCode = new Guid()
+                    ActivationCode = Guid.NewGuid()
                 };
-                product1.Purchases.Add(purchase1);
                 user1.Purchases.Add(purchase1);
+                product1.Purchases.Add(purchase1);
+            }
+
+            User user2 = dbContext.Users.FirstOrDefault(x => x.UserName == "jack");
+            Product product2 = dbContext.Products.FirstOrDefault(x => x.ProductName == "No Longer Human");
+
+            if (product2 != null)
+            {
+                Purchase purchase2 = new Purchase
+                {
+                    PurchaseDate = new DateTime(2021, 10, 1, 9, 0, 0, DateTimeKind.Local),
+                    ActivationCode = Guid.NewGuid()
+                };
+                user2.Purchases.Add(purchase2);
+                product2.Purchases.Add(purchase2);
+            }
+
+            dbContext.SaveChanges();
+        }
+
+        public void SeedReview()
+        {
+
+            // User user = dbContext.Users.FirstOrDefault(x => x.UserName == "jack");
+            // Purchase purchase = dbContext.Purchases.FirstOrDefault(x => x.UserId == user.Id);
+            
+            Product product1 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Jane Eyre");
+
+            if (product1 != null)
+            {
+                Review review1 = new Review()
+                {
+                    Comments = "Loved the book! Download was easy and efficient.",
+                    Rating = 4,
+                    ReviewDate = new DateTime(2021, 10, 15, 10, 0, 0),
+                };
+                product1.Reviews.Add(review1);
+            }
+
+            dbContext.SaveChanges();
+        }
+
+        public void SeedSession()
+        {
+            User jack = dbContext.Users.FirstOrDefault(x => x.UserName == "jack");
+            if (jack != null)
+            {
+                Session session = new Session()
+                {
+                    SessionTime = DateTimeOffset.Now.ToUnixTimeSeconds(),
+                    Valid = true
+                };
+
+                jack.Sessions.Add(session);
+            }
+
+            dbContext.SaveChanges();
+        }
+
+        public void SeedCart()
+        {
+            User user1 = dbContext.Users.FirstOrDefault(x => x.UserName == "jack");
+            Product product1 = dbContext.Products.FirstOrDefault(x => x.ProductName == "1984");
+            Product product2 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Magpie");
+
+            if (product1 != null)
+            {
+                Cart cart1 = new Cart
+                {
+                    Quantity = 1
+                };
+
+                user1.Carts.Add(cart1);
+                product1.Carts.Add(cart1);
+
+                Cart cart2 = new Cart
+                {
+                    Quantity = 2
+                };
+
+                user1.Carts.Add(cart2);
+                product2.Carts.Add(cart2);
             }
             dbContext.SaveChanges();
         }
-        
     }
 }
