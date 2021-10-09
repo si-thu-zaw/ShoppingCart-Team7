@@ -140,6 +140,7 @@ namespace ShoppingCart_Team7
             List<Product> AllProducts = dbContext.Products.ToList();
 
             // declared and initialized variable to indicate number of purchases to seed
+            // remember to update ReviewCount below to ensure that it is <= than purchase count
             int PurchaseCount = 50;
 
             for (int i = 0; i < PurchaseCount; i++)
