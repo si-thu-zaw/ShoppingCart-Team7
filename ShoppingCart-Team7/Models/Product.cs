@@ -11,6 +11,9 @@ namespace ShoppingCart_Team7.Models
         public Product()
         {
             Id = new Guid();
+            Purchases = new List<Purchase>();
+            Carts = new List<Cart>();
+            Reviews = new List<Review>();
         }
 
         // map to primary key

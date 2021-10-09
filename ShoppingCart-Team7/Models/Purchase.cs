@@ -25,7 +25,5 @@ namespace ShoppingCart_Team7.Models
         // ensure foreign keys are not null
         public virtual Guid UserId { get; set; }
         public virtual Guid ProductId { get; set; }
-
-
     }
 }
