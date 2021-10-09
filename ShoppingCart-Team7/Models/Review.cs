@@ -21,7 +21,7 @@ namespace ShoppingCart_Team7.Models
         [MaxLength(500)]
         public string Comments { get; set; }
         [Required]
-        public int Rating { get; set; }
+        public float Rating { get; set; }
         [Required]
         public DateTime ReviewDate { get; set; }
 

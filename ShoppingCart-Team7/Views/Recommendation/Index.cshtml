@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+    
+@{
+    List<Product> TopProdByPurchase = (List<Product>)ViewData["TopProdByPurchase"];
+    List<Product> TopProdByRatings = (List<Product>)ViewData["TopProdByRatings"];
+}
+
+@{ 
+    <h2>Best Sellers</h2>
+    foreach (Product product in TopProdByPurchase)
+    {
+        <h3>@product.ProductName</h3>
+    }
+
+    <h2>Top Rated</h2>
+    foreach (Product product in TopProdByRatings)
+    {
+        <h3>@product.ProductName</h3>
+    }
+}
