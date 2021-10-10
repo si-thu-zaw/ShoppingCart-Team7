@@ -25,11 +25,10 @@
         @{
             foreach (Product rec in recommendation)
             {
-                string imgSrc = "/Images" + rec.ImageSrc;
                 <div class="col-sm">
                     <div class="card">
                         <a href="~/Product/Details/@rec.Id">
-                            <img class="card-img-top" src=@imgSrc alt=@rec.ProductName />
+                            <img class="card-img-top" src=@rec.ImageSrc alt=@rec.ProductName />
                             <div class="card-body">
                                 <h6 class="card-title">@rec.ProductName</h6>
                             </div>

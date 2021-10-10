@@ -26,11 +26,10 @@
             @{
                 foreach (Product bs in TopProdByPurchase)
                 {
-                    string imgSrc = "/Images" + bs.ImageSrc;
                     <div class="col-sm">
                         <div class="card">
                             <a href = "~/Product/Details/@bs.Id">
-                            <img class="card-img-top" src=@imgSrc alt=@bs.ProductName />
+                            <img class="card-img-top" src=@bs.ImageSrc alt=@bs.ProductName />
                             <div class="card-body">
                                 <h6 class="card-title">@bs.ProductName</h6>
                             </div>
@@ -49,11 +48,10 @@
             @{
                 foreach (Product ts in TopProdByRatings)
                 {
-                    string imgSrc = "/Images" + ts.ImageSrc;
                     <div class="col-sm">
                         <div class="card">
                             <a href="~/Product/Details/@ts.Id">
-                            <img class="card-img-top" src=@imgSrc alt=@ts.ProductName />
+                            <img class="card-img-top" src=@ts.ImageSrc alt=@ts.ProductName />
                             <div class="card-body">
                                 <h6 class="card-title">@ts.ProductName</h6>
                             </div>
