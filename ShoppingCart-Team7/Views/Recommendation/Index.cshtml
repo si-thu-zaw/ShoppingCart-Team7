@@ -8,13 +8,15 @@
     List<Product> TopProdByRatings = (List<Product>)ViewData["TopProdByRatings"];
 }
 <style>
-    .product-desc {
-        margin: 10px;
+    a:link, a:hover, a:visited, a:active {
+        text-decoration: none;
+        color: black;
     }
 
     .bestsellers {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
+
 </style>
 
 <div class="recommendations">
@@ -24,13 +26,15 @@
             @{
                 foreach (Product bs in TopProdByPurchase)
                 {
-                    string imgSrc = "~/Images" + bs.ImageSrc;
+                    string imgSrc = "/Images" + bs.ImageSrc;
                     <div class="col-sm">
                         <div class="card">
-                            <img src=@imgSrc alt=@bs.ProductName />
-                            <div class="product-desc">
-                                <p><b>@bs.ProductName</b></p>
+                            <a href = "~/Product/Details/@bs.Id">
+                            <img class="card-img-top" src=@imgSrc alt=@bs.ProductName />
+                            <div class="card-body">
+                                <h6 class="card-title">@bs.ProductName</h6>
                             </div>
+                            </a>
                             <button type="button" class="btn btn-light"><b>$@bs.Price</b><i class="fas fa-shopping-cart"></i></button>
                         </div>
                     </div>
@@ -43,16 +47,18 @@
         <h5>Top Rated E-Books</h5>
         <div class="row">
             @{
-                foreach (Product bs in TopProdByRatings)
+                foreach (Product ts in TopProdByRatings)
                 {
-                    string imgSrc = "~/Images" + bs.ImageSrc;
+                    string imgSrc = "/Images" + ts.ImageSrc;
                     <div class="col-sm">
                         <div class="card">
-                            <img src=@imgSrc alt=@bs.ProductName />
-                            <div class="product-desc">
-                                <p><b>@bs.ProductName</b></p>
+                            <a href="~/Product/Details/@ts.Id">
+                            <img class="card-img-top" src=@imgSrc alt=@ts.ProductName />
+                            <div class="card-body">
+                                <h6 class="card-title">@ts.ProductName</h6>
                             </div>
-                            <button type="button" class="btn btn-light"><b>$@bs.Price</b><i class="fas fa-shopping-cart"></i></button>
+                            </a>
+                            <button type="button" class="btn btn-light"><b>$@ts.Price</b><i class="fas fa-shopping-cart"></i></button>
                         </div>
                     </div>
                 }
