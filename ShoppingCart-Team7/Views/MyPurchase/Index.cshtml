@@ -1,0 +1,103 @@
+﻿@{
+
+    List<Purchase> purchases = (List<Purchase>)ViewData["purchases"];
+    List<Cart> carts = (List<Cart>)ViewData["carts"];
+    List<Product> products = (List<Product>)ViewData["products"];
+
+}
+
+<h2>My Purchases</h2>
+
+<ul class="nav nav-tabs mt-3">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#">All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#">Last Month</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#">Last Year</a>
+    </li>
+</ul>
+
+<div class="my-5">
+    @{
+        foreach (Purchase p in purchases)
+        {
+
+            Product pdt = products.FirstOrDefault(x => x.Id == p.ProductId);
+
+            <div class="row">
+                <div class="col-1"></div>
+
+
+                <!--Purchase Download-->
+                <div class="card col-4 mb-5" id="details">
+                    <img class="card-img-top mx-auto" src="@pdt.ImageSrc" alt="Product image" style="width:70%; height:150px">
+                    <div class="card-body">
+                        <h5 class="card-title">@pdt.ProductName</h5>
+                        <p class="card-text">@pdt.Description</p>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1"></div>
+
+                <!--Purchase Description-->
+                <div class="col-6 pt-5">
+                    <div class="row pt-5" id="purchaseDate">
+                        <dl class="row">
+                            <dt class="col-4">Purchased On:</dt>
+                            <dd class="col-8">@p.PurchaseDate</dd>
+                        </dl>
+                    </div>
+                    <div class="row" id="quantity">
+                        <dl class="row">
+                            <dt class="col-4">Quantity:</dt>
+                            <dd class="col-8"></dd>
+                        </dl>
+                    </div>
+                    <div class="row" id="code">
+                        <dl class="row">
+                            <dt class="col-4">Activation Code:</dt>
+                            <dd class="col-8">@p.ActivationCode</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        };
+    }
+</div>
+
+
+
+
+
+<!-- DOWNLOAD Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color:powderblue;">
+                <h4 class="modal-title">Awesome</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Successfully downloaded. Thank You for your purchase
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+

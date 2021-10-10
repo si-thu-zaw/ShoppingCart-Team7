@@ -69,3 +69,53 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*Gallery Styles*/
+.gallery-card {
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 750px;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+    .gallery-card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+.gallery-description {
+    /*height: 180px;
+    text-overflow: ellipsis;
+    white-space: pre-line;
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+   */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.gallery-pic {
+    width: 80%;
+    height: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 5px;
+}
+
+.searchbar {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.gallery-buy-button {
+    border-radius: 8px;
+    position: absolute;
+    bottom: 20px;
+    width: 95%;
+}
