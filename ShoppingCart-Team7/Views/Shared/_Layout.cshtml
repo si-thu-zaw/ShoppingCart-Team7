@@ -28,7 +28,40 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Gallery" asp-action="Index">Products</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MyPurchase" asp-action="Index">MyPurchase</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <span class="nav-link dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Dropdown Test
+                                    <span class="caret"></span>
+                                </span>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item"><a href="#">HTML</a></li>
+                                    <li class="dropdown-item"><a href="#">CSS</a></liclass="dropdown-item">
+                                    <li class="dropdown-item"><a href="#">JavaScript</a></liclass="dropdown-item">
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action(" Index", "Home" , new { area="" })">
+                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            </form>
                         </li>
                     </ul>
                 </div>
