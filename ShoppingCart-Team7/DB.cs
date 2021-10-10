@@ -21,9 +21,12 @@ namespace ShoppingCart_Team7
         public void Seed()
         {
             SeedUsers();
+            SeedSession();
             SeedProducts();
             SeedProducts1();
-            // SeedPurchase();
+            SeedPurchase();
+            SeedReview();
+            SeedCart();
         }
 
         public void SeedUsers()
@@ -133,21 +136,140 @@ namespace ShoppingCart_Team7
 
         public void SeedPurchase()
         {
-            User user1 = dbContext.Users.FirstOrDefault(x => x.UserName == "jack");
-            Product product1 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Jane Eyre");
+            List<User> AllUsers = dbContext.Users.ToList();
+            List<Product> AllProducts = dbContext.Products.ToList();
 
-            if (product1 != null)
+            // declared and initialized variable to indicate number of purchases to seed
+            // remember to update ReviewCount below to ensure that it is <= than purchase count
+            int PurchaseCount = 50;
+
+            for (int i = 0; i < PurchaseCount; i++)
             {
-                Purchase purchase1 = new Purchase
+                // Choose random buyer & product
+                Random r = new Random();
+                User buyer = AllUsers[r.Next(AllUsers.Count)];
+                Product product = AllProducts[r.Next(AllProducts.Count)];
+
+                // Insert into Purchase table
+                if (product != null && buyer != null)
                 {
-                    PurchaseDate = new DateTime(2021, 10, 1, 9, 0, 0, DateTimeKind.Local),
-                    ActivationCode = new Guid()
-                };
-                product1.Purchases.Add(purchase1);
-                user1.Purchases.Add(purchase1);
+                    Purchase purchase = new Purchase
+                    {
+                        PurchaseDate = new DateTime(2021, r.Next(1, 13), r.Next(1, 29), 9, 0, 0, DateTimeKind.Local),
+                        ActivationCode = Guid.NewGuid()
+                    };
+
+                    buyer.Purchases.Add(purchase);
+                    product.Purchases.Add(purchase);
+                }
             }
+
             dbContext.SaveChanges();
         }
-        
+
+        public void SeedReview()
+        {
+            List<Purchase> AllPurchases = dbContext.Purchases.ToList();
+            Random r = new Random();
+
+            // Declared and initializedvariable variable to indicate number of reviews to seed
+            // ReviewCount shouldn't exceed PurchaseCount in SeedPurchase();
+            int ReviewCount = 45;
+
+            // Comments
+            string[] Comments = {"Terrible! You're better off reading something else.",
+                                 "Book wasn't very good.",
+                                 "Average book!",
+                                 "Enjoyed the book! Process to download the book was easy to understand to.",
+                                 "Loved the book! Download was simple and efficient."};
+
+            for (int i = 0; i < ReviewCount; i++)
+            {
+                Purchase purchase = AllPurchases[i];
+                Product product = dbContext.Products.FirstOrDefault(p => p.Id == purchase.ProductId);
+
+                if (purchase != null && product != null)
+                {
+                    // Generate random rating
+                    int rating = r.Next(1, 6);
+
+                    Review reviewEntry = new Review
+                    {
+                        Comments = Comments[rating-1],
+                        Rating = rating,
+                        ReviewDate = purchase.PurchaseDate.AddDays(3)
+                    };
+
+                    if (reviewEntry != null)
+                    {
+                        product.Reviews.Add(reviewEntry);
+                        reviewEntry.Purchases = purchase;
+                    }
+                }
+
+                dbContext.SaveChanges();
+            }
+            
+        }
+
+        public void SeedSession()
+        {
+            List<User> AllUsers = dbContext.Users.ToList();
+
+            // variable decides how many session to create
+            int SessionCount = 5;
+
+            for (int i = 0; i < SessionCount; i++)
+            {
+                User user = AllUsers[i];
+
+                if (user != null)
+                {
+                    Session session = new Session()
+                    {
+                        SessionTime = DateTimeOffset.Now.ToUnixTimeSeconds(),
+                        Valid = true
+                    };
+
+                    user.Sessions.Add(session);
+                }
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void SeedCart()
+        {
+            List<User> AllUsers = dbContext.Users.ToList();
+            List<Product> AllProducts = dbContext.Products.ToList();
+
+            // variable decides how many items will be in a cart for each user
+            int CartItem = 2;
+
+            Random r = new Random();
+
+            for (int i = 0; i < AllUsers.Count; i++)
+            {
+                User user = AllUsers[i];
+
+                for (int j = 0; j < CartItem; j++)
+                {
+                    // Choose random product to add to cart
+                    Product item = AllProducts[r.Next(AllProducts.Count)];
+
+                    if (user != null && item != null)
+                    {
+                        Cart cart = new Cart
+                        {
+                            Quantity = r.Next(1, 4)
+                        };
+
+                        user.Carts.Add(cart);
+                        item.Carts.Add(cart);
+                    }
+                }
+            }
+
+            dbContext.SaveChanges();
+        }
     }
 }
