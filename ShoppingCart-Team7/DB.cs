@@ -27,6 +27,7 @@ namespace ShoppingCart_Team7
             SeedPurchase();
             SeedReview();
             SeedCart();
+            SeedCart1();
         }
 
         public void SeedUsers()
@@ -270,6 +271,29 @@ namespace ShoppingCart_Team7
             }
 
             dbContext.SaveChanges();
+        }
+
+        public void SeedCart1()
+        {
+            List<Purchase> purchases = dbContext.Purchases.ToList();
+            User user = dbContext.Users.FirstOrDefault(x => x.UserName == "charles");
+            List<Product> products = new List<Product>();
+            foreach (Purchase p in purchases)
+            {
+                products = dbContext.Products.Where(x => x.Id == p.ProductId).ToList();
+            }
+            foreach (Product pdt in products)
+            {
+                Cart cart = new Cart
+                {
+                    Quantity = 1,
+                    UserId = user.Id,
+                    ProductId = pdt.Id
+                };
+            }
+
+            dbContext.SaveChanges();
+
         }
     }
 }
