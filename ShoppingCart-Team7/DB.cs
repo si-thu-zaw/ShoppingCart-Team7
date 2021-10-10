@@ -276,20 +276,24 @@ namespace ShoppingCart_Team7
         public void SeedCart1()
         {
             List<Purchase> purchases = dbContext.Purchases.ToList();
-            User user = dbContext.Users.FirstOrDefault(x => x.UserName == "charles");
-            List<Product> products = new List<Product>();
+
+            Random r = new Random();
+
             foreach (Purchase p in purchases)
             {
-                products = dbContext.Products.Where(x => x.Id == p.ProductId).ToList();
-            }
-            foreach (Product pdt in products)
-            {
-                Cart cart = new Cart
+                Product pdt = dbContext.Products.FirstOrDefault(x => x.Id == p.ProductId);
+                User u = dbContext.Users.FirstOrDefault(x => x.Id == p.UserId);
+
+                if (pdt!=null&&u!=null)
                 {
-                    Quantity = 1,
-                    UserId = user.Id,
-                    ProductId = pdt.Id
-                };
+                    Cart cart = new Cart
+                    {
+                        Quantity = r.Next(1, 4)
+                    };
+
+                    pdt.Carts.Add(cart);
+                    u.Carts.Add(cart);
+                }
             }
 
             dbContext.SaveChanges();

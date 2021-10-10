@@ -27,6 +27,7 @@
         {
 
             Product pdt = products.FirstOrDefault(x => x.Id == p.ProductId);
+            Cart c = carts.FirstOrDefault(x => x.ProductId == p.ProductId);
 
             <div class="row">
                 <div class="col-1"></div>
@@ -58,7 +59,7 @@
                     <div class="row" id="quantity">
                         <dl class="row">
                             <dt class="col-4">Quantity:</dt>
-                            <dd class="col-8"></dd>
+                            <dd class="col-8">@c.Quantity</dd>
                         </dl>
                     </div>
                     <div class="row" id="code">
