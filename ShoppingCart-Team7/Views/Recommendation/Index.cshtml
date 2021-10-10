@@ -3,20 +3,61 @@
 *@
     
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     List<Product> TopProdByPurchase = (List<Product>)ViewData["TopProdByPurchase"];
     List<Product> TopProdByRatings = (List<Product>)ViewData["TopProdByRatings"];
 }
-
-@{ 
-    <h2>Best Sellers</h2>
-    foreach (Product product in TopProdByPurchase)
-    {
-        <h3>@product.ProductName</h3>
+<style>
+    .product-desc {
+        margin: 10px;
     }
 
-    <h2>Top Rated</h2>
-    foreach (Product product in TopProdByRatings)
-    {
-        <h3>@product.ProductName</h3>
+    .bestsellers {
+        margin-bottom: 30px;
     }
-}
+</style>
+
+<div class="recommendations">
+    <div class="bestsellers">
+        <h5>Best Sellers</h5>
+        <div class="row">
+            @{
+                foreach (Product bs in TopProdByPurchase)
+                {
+                    string imgSrc = "~/Images" + bs.ImageSrc;
+                    <div class="col-sm">
+                        <div class="card">
+                            <img src=@imgSrc alt=@bs.ProductName />
+                            <div class="product-desc">
+                                <p><b>@bs.ProductName</b></p>
+                            </div>
+                            <button type="button" class="btn btn-light"><b>$@bs.Price</b><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="toprated">
+        <h5>Top Rated E-Books</h5>
+        <div class="row">
+            @{
+                foreach (Product bs in TopProdByRatings)
+                {
+                    string imgSrc = "~/Images" + bs.ImageSrc;
+                    <div class="col-sm">
+                        <div class="card">
+                            <img src=@imgSrc alt=@bs.ProductName />
+                            <div class="product-desc">
+                                <p><b>@bs.ProductName</b></p>
+                            </div>
+                            <button type="button" class="btn btn-light"><b>$@bs.Price</b><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+ </div>
+
