@@ -6,28 +6,6 @@
     string searchstring = (string)ViewData["searchstring"];
 }
 
-<style>
-    .card {
-        margin-bottom: 8px;
-        padding: 10px;
-    }
-
-    .galleryimage {
-        height: 100px;
-        width: 100px;
-        outline: 3px solid black;
-        align
-    }
-
-    .searchbar {
-        width: 100%;
-        border-radius: 8px;
-    }
-
-    .gallery-buy-button {
-        border-radius: 8px;
-    }
-</style>
 
 <div class="">
     <div class="form-group">
@@ -39,15 +17,21 @@
         @{
             foreach (var product in ProductList)
             {
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card">
-                        <img src="#" alt="@product.ImageSrc" />
-                        <h5>@product.ProductName</h5>
-                        <p>@product.Description</p>
-                        <button class="btn-dark gallery-buy-button">@product.Price Add to Cart</button>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="gallery-card card">
+                        <img src="@product.ImageSrc" alt="@product.ProductName book cover" class="gallery-pic" />
+                        <div class="">
+                            <h5 class="text-truncate card-title">@product.ProductName</h5>
+                            <div class="gallery-description card-text">
+                                <p>@product.Description</p>
+                            </div>
+                            <button class="btn-dark btn-block gallery-buy-button">$@product.Price Add to Cart</button>
+
+                        </div>
                     </div>
                 </div>
             }
         }
     </div>
+    <div style="height: 100px;"></div>
 </div>
