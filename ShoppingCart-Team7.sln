@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCart-Team7", "ShoppingCart-Team7\ShoppingCart-Team7.csproj", "{05F5BB90-B073-48C6-BDE9-C11A2F514463}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart-Team7", "ShoppingCart-Team7\ShoppingCart-Team7.csproj", "{05F5BB90-B073-48C6-BDE9-C11A2F514463}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
