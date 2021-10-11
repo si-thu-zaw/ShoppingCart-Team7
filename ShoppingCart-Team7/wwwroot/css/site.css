@@ -124,7 +124,7 @@ body {
 
 .home-pic {
     height: 300px;
-    width: 95%;
+    width: auto;
     margin-left: auto;
     margin-right: auto;
     display: block;
