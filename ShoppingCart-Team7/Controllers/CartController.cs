@@ -19,7 +19,7 @@ namespace ShoppingCart_Team7.Controllers
 
         public IActionResult Index()
         {
-            string userid = "61AF7822-2228-4ED2-225F-08D98BBDDE8C";
+            string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
             List<CartItems> anotherCartList = new List<CartItems>();
             anotherCartList = dbContext.Carts.Join(
                 dbContext.Products,
@@ -42,7 +42,7 @@ namespace ShoppingCart_Team7.Controllers
             //    join product in dbContext.Products on cart.ProductId equals product.Id
             //    select new { ProductName = product.ProductName, Quantity = cart.Quantity, Price = product.Price, User = cart.UserId.ToString() }
             //    where 
-                    
+
 
             //foreach (var thingy in anotherCartList)
             //{
