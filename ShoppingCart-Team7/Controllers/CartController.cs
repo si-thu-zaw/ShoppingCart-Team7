@@ -37,6 +37,13 @@ namespace ShoppingCart_Team7.Controllers
                 ).ToList();
             ViewData["whatisthis"] = anotherCartList;
 
+            //anotherCartList =
+            //    from cart in dbContext.Carts
+            //    join product in dbContext.Products on cart.ProductId equals product.Id
+            //    select new { ProductName = product.ProductName, Quantity = cart.Quantity, Price = product.Price, User = cart.UserId.ToString() }
+            //    where 
+                    
+
             //foreach (var thingy in anotherCartList)
             //{
             //    Console.WriteLine(thingy.ProductName + " " + thingy.Price);
