@@ -50,6 +50,7 @@ namespace ShoppingCart_Team7
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

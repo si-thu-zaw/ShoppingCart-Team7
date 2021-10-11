@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Product product = (Product)ViewData["Product"];
+    List<Product> recommendation = (List<Product>)ViewData["Recommendation"];
+}
+
+<style>
+    a:link, a:hover, a:visited, a:active {
+        text-decoration: none;
+        color: black;
+    }
+
+</style>
+
+<h1>Product Detail</h1>
+<h2>@product.Id</h2>
+<h2>@product.ProductName</h2>
+<br />
+
+<div class="recommendation">
+    <h6>Customers who bought this also bought: </h6>
+    <div class="row">
+        @{
+            foreach (Product rec in recommendation)
+            {
+                <div class="col-sm">
+                    <div class="card">
+                        <a href="~/Product/Details/@rec.Id">
+                            <img class="card-img-top" src=@rec.ImageSrc alt=@rec.ProductName />
+                            <div class="card-body">
+                                <h6 class="card-title">@rec.ProductName</h6>
+                            </div>
+                        </a>
+                        <button type="button" class="btn btn-light"><b>$@rec.Price</b><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

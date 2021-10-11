@@ -27,7 +27,7 @@ namespace ShoppingCart_Team7.Controllers
             // To find top 5 products based on purchase count
             var PurchaseCnt = AllPurchases.GroupBy(x => x.ProductId)
                                              .OrderByDescending(x => x.Count())
-                                             .Take(5);
+                                             .Take(4);
 
             // Add top 5 products into TopProdByPurchase
             foreach (var product in PurchaseCnt)
@@ -38,7 +38,7 @@ namespace ShoppingCart_Team7.Controllers
             // To find top 5 products based on rating
             var Ratings = AllReviews.GroupBy(x => x.ProductId)
                                     .OrderByDescending(x => x.Average(x => x.Rating))
-                                    .Take(5);
+                                    .Take(4);
 
             // Add top 5 products into TopProdByRatings
             foreach (var product in Ratings)
