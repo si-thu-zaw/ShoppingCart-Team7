@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using ShoppingCart_Team7.Models;
+using System.Dynamic;
 
 namespace ShoppingCart_Team7.Controllers
 {
@@ -21,20 +23,10 @@ namespace ShoppingCart_Team7.Controllers
             List<Purchase> purchases = dbContext.Purchases.ToList();
             List<Cart> carts = dbContext.Carts.ToList();
             List<Product> products = dbContext.Products.ToList();
-            var data =
-                from p in purchases
-                from c in carts
-                from pd in products
-                where p.ProductId == pd.Id && pd.Id == c.ProductId
-                select new
-                {
-                    q = c.Quantity
-                };
 
             ViewData["purchases"] = purchases;
             ViewData["carts"] = carts;
             ViewData["products"] = products;
-            ViewData["data"] = data;
 
             foreach (Purchase p in purchases)
             {
@@ -44,5 +36,7 @@ namespace ShoppingCart_Team7.Controllers
 
             return View();
         }
+
+        
     }
 }

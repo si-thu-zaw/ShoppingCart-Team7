@@ -3,6 +3,7 @@
     List<Purchase> purchases = (List<Purchase>)ViewData["purchases"];
     List<Cart> carts = (List<Cart>)ViewData["carts"];
     List<Product> products = (List<Product>)ViewData["products"];
+    int pdtCount = purchases.Count();
 
 }
 
@@ -10,7 +11,7 @@
 
 <ul class="nav nav-tabs mt-3">
     <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#">All</a>
+        <a class="nav-link active" data-bs-toggle="tab" href="#">All (@pdtCount)</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="tab" href="#">Last Month</a>
@@ -26,6 +27,7 @@
         {
 
             Product pdt = products.FirstOrDefault(x => x.Id == p.ProductId);
+            Cart c = carts.FirstOrDefault(x => x.ProductId == p.ProductId);
 
             <div class="row">
                 <div class="col-1"></div>
@@ -57,7 +59,7 @@
                     <div class="row" id="quantity">
                         <dl class="row">
                             <dt class="col-4">Quantity:</dt>
-                            <dd class="col-8"></dd>
+                            <dd class="col-8">@c.Quantity</dd>
                         </dl>
                     </div>
                     <div class="row" id="code">
