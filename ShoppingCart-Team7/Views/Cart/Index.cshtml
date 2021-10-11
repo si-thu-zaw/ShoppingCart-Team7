@@ -6,9 +6,15 @@
     List<CartItems> CartList = (List<CartItems>)ViewData["whatisthis"];
     foreach (dynamic item in CartList)
     {
-                @item.ProductName;
-                @item.Quantity;
-            }
+        //float sum = 0;
+        //sum = sum + (item.Quantity * item.Price);
+        //sum = Convert.ToDouble(sum);
+
+        <p>Product: @item.ProductName <br>Quantity: @item.Quantity <br>Price: $@item.Price</p>
+        @*<p>Total: @sum:0.00;</p>*@
+        @*<p>@item.Quantity</p>
+            <p>$@item.Price</p>*@
+    }
 }
 
 
