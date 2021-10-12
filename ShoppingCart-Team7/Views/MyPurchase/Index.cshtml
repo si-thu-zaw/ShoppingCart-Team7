@@ -5,72 +5,120 @@
     List<Product> products = (List<Product>)ViewData["products"];
     int pdtCount = purchases.Count();
 
+    string searchStr = (string)ViewData["searchStr"];
+
 }
+<!-- Header and Search -->
+<div>
+    <div class="mb-3">
+        <h2>My Purchases</h2>
+    </div>
+    <div class="nav">
+        <div class="col-6 nav-item">
+            <form action="/MyPurchase/Search/" method="post">
+                <div class="input-group rounded">
+                    <input type="search" name="searchStr" value="@searchStr" class="form-control rounded" placeholder="Search" aria-label="Search"
+                           aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" id="search-addon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="dropdown nav-item">
+            <button type="button" class="btn border border-dark dropdown-toggle" data-bs-toggle="dropdown">
+                Sort By
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#new">Date (Newest)</a></li>
+                <li><a class="dropdown-item" href="#old">Date (Latest)</a></li>
+                <li><a class="dropdown-item" href="#name">Product Name</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-<h2>My Purchases</h2>
-
+<!-- Nav Menu -->
 <ul class="nav nav-tabs mt-3">
     <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#">All (@pdtCount)</a>
+        <a class="nav-link active" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="1">All (@pdtCount)</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#">Last Month</a>
+        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="2">Last Month</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#">Last Year</a>
+        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="3">Last Year</a>
     </li>
 </ul>
 
-<div class="my-5">
+<div class="my-5" id="page">
     @{
-        foreach (Purchase p in purchases)
+        if (purchases.Count() == 0)
         {
+            <h4>No result found</h4>
+        }
+        else
+        {
+            foreach (Purchase p in purchases)
+            {
 
-            Product pdt = products.FirstOrDefault(x => x.Id == p.ProductId);
-            Cart c = carts.FirstOrDefault(x => x.ProductId == p.ProductId);
+                Product pdt = products.FirstOrDefault(x => x.Id == p.ProductId);
 
-            <div class="row">
-                <div class="col-1"></div>
+                if (pdt == null)
+                {
+                    <h4>No result found</h4>
+
+                    break;
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-1"></div>
 
 
-                <!--Purchase Download-->
-                <div class="card col-4 mb-5" id="details">
-                    <img class="card-img-top mx-auto" src="@pdt.ImageSrc" alt="Product image" style="width:70%; height:150px">
-                    <div class="card-body">
-                        <h5 class="card-title">@pdt.ProductName</h5>
-                        <p class="card-text">@pdt.Description</p>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
-                                Download
-                            </button>
+                        <!--Purchase Download-->
+                        <div class="card col-4 mb-5" id="details">
+                            <img class="card-img-top mx-auto" src="@pdt.ImageSrc" alt="Product image" style="width:70%; height:300px" id="image">
+                            <div class="card-body">
+                                <h5 class="card-title" id="productName">@pdt.ProductName</h5>
+                                <p class="card-text">@pdt.Description</p>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+
+                        <!--Purchase Description-->
+                        <div class="col-6 pt-5">
+                            <div class="row pt-5" id="purchaseDate">
+                                <dl class="row">
+                                    <dt class="col-4">Purchased On:</dt>
+                                    <dd class="col-8">@p.PurchaseDate</dd>
+                                </dl>
+                            </div>
+                            <div class="row" id="quantity">
+                                <dl class="row">
+                                    <dt class="col-4">Quantity:</dt>
+                                    <dd class="col-8"></dd>
+                                </dl>
+                            </div>
+                            <div class="row" id="code">
+                                <dl class="row">
+                                    <dt class="col-4">Activation Code:</dt>
+                                    <dd class="col-8">
+                                        @p.ActivationCode
+
+                                    </dd>
+                                </dl>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-1"></div>
-
-                <!--Purchase Description-->
-                <div class="col-6 pt-5">
-                    <div class="row pt-5" id="purchaseDate">
-                        <dl class="row">
-                            <dt class="col-4">Purchased On:</dt>
-                            <dd class="col-8">@p.PurchaseDate</dd>
-                        </dl>
-                    </div>
-                    <div class="row" id="quantity">
-                        <dl class="row">
-                            <dt class="col-4">Quantity:</dt>
-                            <dd class="col-8">@c.Quantity</dd>
-                        </dl>
-                    </div>
-                    <div class="row" id="code">
-                        <dl class="row">
-                            <dt class="col-4">Activation Code:</dt>
-                            <dd class="col-8">@p.ActivationCode</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        };
+                }
+            };
+        }
     }
 </div>
 
@@ -102,4 +150,8 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+
 
