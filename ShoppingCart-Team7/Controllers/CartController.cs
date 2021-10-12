@@ -48,7 +48,7 @@ namespace ShoppingCart_Team7.Controllers
                 totalPrice += cart.itemsPrice;
             }
 
-
+            ViewData["totalprice"] = totalPrice;
             ViewData["whatisthis"] = anotherCartList;
 
             //foreach (var thingy in anotherCartList)
