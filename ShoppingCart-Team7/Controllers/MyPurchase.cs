@@ -25,6 +25,17 @@ namespace ShoppingCart_Team7.Controllers
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Product> products = dbContext.Products.ToList();
 
+            List<PurchaseCodes> codes = (List<PurchaseCodes>)(from p in purchases
+                                                                     group p by new { p.ProductId, p.PurchaseDate } into grp
+                                                                     select new PurchaseCodes()
+                                                                     {
+                                                                         PID_PDATE = grp.Key.ToString(),
+                                                                         ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                                         Quantity = grp.Select(a => a.ActivationCode).Count()
+                                                                     }).ToList();
+
+            ViewData["codes"] = codes;
+
             ViewData["purchases"] = Sort(purchases, id);
             ViewData["products"] = products;
             ViewData["searchStr"] = "";
@@ -80,12 +91,13 @@ namespace ShoppingCart_Team7.Controllers
 
             string username = "charles";
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
-            List<Product> products = dbContext.Products.Where(x => x.ProductName.Contains(searchStr)).ToList();
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
+            List<Product> products = dbContext.Products.Where(x => x.ProductName.Contains(searchStr)).ToList();
+
 
             foreach (Product pdt in products)
             {
-                purchases = dbContext.Purchases.Where(x => x.ProductId == pdt.Id).ToList();
+                purchases = purchases.Where(x => x.ProductId == pdt.Id).ToList();
             }
 
             ViewData["purchases"] = purchases;
