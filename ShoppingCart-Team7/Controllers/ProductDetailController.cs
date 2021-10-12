@@ -1,17 +1,52 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShoppingCart_Team7.Data;
+using ShoppingCart_Team7.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Data.SqlClient;
-using ShoppingCart_Team7.Models;
 using Microsoft.Data.SqlClient;
 using ShoppingCart_Team7.Controllers;
 
-namespace ShoppingCart_Team7.Data
+namespace ShoppingCart_Team7.Controllers
 {
-    public class DetailData
+    public class ProductDetailController : Controller
     {
+        private DBContext dbContext;
+
+        public ProductDetailController(DBContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
+        public IActionResult Index(string ProductId)
+        {
+            Product product = GetAllDetails(ProductId);
+            ViewData["ProductId"] = ProductId;
+            ViewData["product"] = product;
+
+
+            List<Review> reviewList = dbContext.Reviews.ToList();
+            var ratings = reviewList.GroupBy(x => x.ProductId);
+            float arating = 0;
+            foreach (var grp in ratings)
+            {
+                if (grp.Key.ToString() == ProductId)
+                {
+                    Debug.WriteLine("okok");
+                    arating = grp.Average(x => x.Rating);
+                }
+
+                Debug.WriteLine($"{ grp.Key} { grp.Average(x => x.Rating)}");
+            };
+
+            ViewData["rating"] = arating;
+            Debug.WriteLine(arating);
+
+            return View();
+        }
+
         protected static readonly string connectionString = "Server=localhost;Database=ShoppingCartDB; Integrated Security=true";
         public static Product GetAllDetails(string ProductId)
         {
@@ -41,6 +76,14 @@ namespace ShoppingCart_Team7.Data
                 };
             }
             return product;
+        }
+
+        public IActionResult Details(Guid ID)
+        {
+            Product product = dbContext.Products.FirstOrDefault(x => x.Id == ID);
+            ViewData["Product"] = product;
+            ViewData["Recommendation"] = GetRecommendations(ID);
+            return View();
         }
     }
 }

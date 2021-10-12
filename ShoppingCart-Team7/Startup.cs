@@ -61,7 +61,7 @@ namespace ShoppingCart_Team7
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Gallery}/{action=Index}/{id?}");
             });
 
             if (!dbContext.Database.CanConnect())
