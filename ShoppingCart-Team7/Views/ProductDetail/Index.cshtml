@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "ProductDetail";
 }
 
@@ -11,13 +10,13 @@
 
 <head>
     <style>
-        .whole{
-            margin-left:120px;
-            margin-right:120px;
+        .whole {
+            margin-left: 120px;
+            margin-right: 120px;
         }
 
-        .navigation{
-            margin-bottom:20px;
+        .navigation {
+            margin-bottom: 20px;
         }
 
         .main {
@@ -29,8 +28,8 @@
 
         .detailimg {
             border: 10px solid #808080;
-            float:left;
-            width:300px;
+            float: left;
+            width: 300px;
         }
 
         .detailbox {
@@ -47,17 +46,14 @@
             color: #CD5C5C;
             font-size: 30px;
             font-weight: bold;
-            margin-top:40px;
+            margin-top: 40px;
         }
 
-        .comment{
-
+        .comment {
         }
 
-        .recommendation{
-
+        .recommendation {
         }
-
     </style>
 </head>
 
@@ -66,7 +62,7 @@
 
     <div class="main">
         <div class="detail">
-            <img class="detailimg" src="/image/@product.ImageSrc" alt="@product.ProductName image">
+            <img class="detailimg" src="@product.ImageSrc" alt="@product.ProductName image">
             <div class="detailbox">
                 <h2 class="productnametext">@product.ProductName </h2>
                 <p class="pricetext">$ @product.Price</p>
@@ -79,8 +75,3 @@
     </div>
 </body>
 
-
-<!--// product name, image, price, comment
-// add to cart,  cart, sales volumn, recommendation
-// top sale5, rating(3/5)-->
-<!--  -->
