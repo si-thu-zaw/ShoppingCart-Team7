@@ -28,6 +28,7 @@ namespace ShoppingCart_Team7.Controllers
                 (Cart, Product) => new CartItems
                 {
                     ProductName = Product.ProductName,
+                    ProductImg = Product.ImageSrc,
                     Quantity = Cart.Quantity,
                     Price = Product.Price,
                     User = Cart.UserId.ToString()
@@ -51,10 +52,21 @@ namespace ShoppingCart_Team7.Controllers
 
             return View();
         }
-
-        public IActionResult AddToCart()
+        [Route("addtocart/{id}")]
+        public IActionResult AddToCart(string id)
         {
-            return View();
+            //List<Item> cart = (List<Item>)
+            //List<string> addCartItem = new List<string>;
+
+            //var addCartItem = dbContext.Carts.FirstOrDefault(
+            //    cart => cart.Id == ShoppingId);
+
+            //addCartItem = new addToCart
+            //{
+            //    CartID = sh
+            //};
+
+            return RedirectToAction("Index");
         }
     }
 

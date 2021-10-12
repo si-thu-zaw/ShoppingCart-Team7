@@ -1,21 +1,33 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-    //var cartlist = (new {string ProductName, int Quantity, float Price, string })
-    List<CartItems> CartList = (List<CartItems>)ViewData["whatisthis"];
-    foreach (dynamic item in CartList)
-    {
-        //float sum = 0;
-        //sum = sum + (item.Quantity * item.Price);
-        //sum = Convert.ToDouble(sum);
+<table width="80%">
+    @{
+        //var cartlist = (new {string ProductName, int Quantity, float Price, string })
+        List<CartItems> CartList = (List<CartItems>)ViewData["whatisthis"];
+        foreach (dynamic item in CartList)
+        {
+            //float sum = 0;
+            //sum = sum + (item.Quantity * item.Price);
+            //sum = Convert.ToDouble(sum);
 
-        <p>Product: @item.ProductName <br>Quantity: @item.Quantity <br>Price: $@item.Price</p>
+            @*<p><img src=@item.ProductImg style="float:left" width="5%" height="5%"> @item.ProductName <br>Quantity: @item.Quantity <br>Price: $@item.Price</p>*@
+            <tr>
+                <td><img src=@item.ProductImg style="float:left" width="5%" height="5%">@item.ProductName</td>
+                @*<td width="25%">@item.ProductName</td>*@
+                <td width="10%">Quantity: @item.Quantity</td>
+                <td width="10%">$@item.Price</td>
+            </tr>
 
-        @*<p>Total: @sum:0.00;</p>*@
-        @*<p>@item.Quantity</p>
-            <p>$@item.Price</p>*@
+            <br />
+
+            @*<p>Total: @sum:0.00;</p>*@
+            @*<p>@item.Quantity</p>
+                <p>$@item.Price</p>*@
+        }
+
     }
-}
+</table>
+
 
 
