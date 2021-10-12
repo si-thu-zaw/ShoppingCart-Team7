@@ -56,7 +56,7 @@ namespace ShoppingCart_Team7.Controllers
         public IActionResult AddToCart(string id)
         {
             string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
-            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == /*(Guid.Parse*/(userid)/*)*/ && x.ProductId == /*(Guid.Parse*/(id)/*)*/);
+            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
             
             if (cart == null)
             {
