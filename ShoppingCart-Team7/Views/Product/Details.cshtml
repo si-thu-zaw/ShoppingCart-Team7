@@ -6,14 +6,6 @@
     List<Product> recommendation = (List<Product>)ViewData["Recommendation"];
 }
 
-<style>
-    a:link, a:hover, a:visited, a:active {
-        text-decoration: none;
-        color: black;
-    }
-
-</style>
-
 <h1>Product Detail</h1>
 <h2>@product.Id</h2>
 <h2>@product.ProductName</h2>
@@ -25,15 +17,15 @@
         @{
             foreach (Product rec in recommendation)
             {
-                <div class="col-sm">
-                    <div class="card">
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <div class="card home-card">
                         <a href="~/Product/Details/@rec.Id">
-                            <img class="card-img-top" src=@rec.ImageSrc alt=@rec.ProductName />
+                            <img class="home-pic" src=@rec.ImageSrc alt=@rec.ProductName />
                             <div class="card-body">
                                 <h6 class="card-title">@rec.ProductName</h6>
                             </div>
                         </a>
-                        <button type="button" class="btn btn-light"><b>$@rec.Price</b><i class="fas fa-shopping-cart"></i></button>
+                        <button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button>
                     </div>
                 </div>
             }

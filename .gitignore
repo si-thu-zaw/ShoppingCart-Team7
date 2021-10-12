@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ShoppingCart-Team7/wwwroot/chicago.jpg
+/ShoppingCart-Team7/wwwroot/la.jpg
+/ShoppingCart-Team7/wwwroot/ny.jpg

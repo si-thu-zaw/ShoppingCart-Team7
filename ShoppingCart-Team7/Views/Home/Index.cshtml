@@ -1,8 +1,55 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    List<Product> TopProdByPurchase = (List<Product>)ViewData["TopProdByPurchase"];
+    List<Product> TopProdByRatings = (List<Product>)ViewData["TopProdByRatings"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    
+</style>
+
+<div class="recommendations">
+    <div class="bestsellers">
+        <h5>Best Sellers</h5>
+        <div class="row">
+            @{
+                foreach (Product bs in TopProdByPurchase)
+                {
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                        <div class="card home-card">
+                            <a href="~/Product/Details/@bs.Id">
+                                <img class="home-pic" src=@bs.ImageSrc alt=@bs.ProductName />
+                                <div class="card-body">
+                                    <h6 class="card-title">@bs.ProductName</h6>
+                                </div>
+                            </a>
+                            <button type="button" class="btn-dark btn-block home-buy-button">$@bs.Price Add to Cart</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="toprated">
+        <h5>Top Rated E-Books</h5>
+        <div class="row">
+            @{
+                foreach (Product ts in TopProdByRatings)
+                {
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                        <div class="card home-card">
+                            <a href="~/Product/Details/@ts.Id">
+                                <img class="home-pic" src=@ts.ImageSrc alt=@ts.ProductName />
+                                <div class="card-body">
+                                    <h6 class="card-title">@ts.ProductName</h6>
+                                </div>
+                            </a>
+                            <button type="button" class="btn-dark btn-block home-buy-button">$@ts.Price Add to Cart</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
