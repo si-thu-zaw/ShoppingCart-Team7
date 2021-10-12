@@ -28,6 +28,7 @@ namespace ShoppingCart_Team7
             SeedReview();
             SeedCart();
             SeedCart1();
+            SeedPurchase1();
         }
 
         public void SeedUsers()
@@ -167,6 +168,48 @@ namespace ShoppingCart_Team7
 
             dbContext.SaveChanges();
         }
+
+        public void SeedPurchase1()
+        {
+            User user = dbContext.Users.FirstOrDefault(x => x.UserName == "charles");
+            Product product1 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Magpie");
+            Product product2 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Nineteen Minutes");
+
+            if (user!=null&&product1!=null)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Purchase purchase = new Purchase
+                    {
+                        PurchaseDate = new DateTime(2021, 9, 29, 14, 3, 4, DateTimeKind.Local),
+                        ActivationCode = Guid.NewGuid()
+                    };
+                    user.Purchases.Add(purchase);
+                    product1.Purchases.Add(purchase);
+                }
+            }
+            if (user != null && product2 != null)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Purchase purchase = new Purchase
+                    {
+                        PurchaseDate = new DateTime(2020, 5, 6, 12, 8, 4, DateTimeKind.Local),
+                        ActivationCode = Guid.NewGuid()
+                    };
+                    user.Purchases.Add(purchase);
+                    product2.Purchases.Add(purchase);
+                }
+            }
+
+            dbContext.SaveChanges();
+        }
+
+            
+        
+
+
+    
 
         public void SeedReview()
         {
