@@ -24,7 +24,7 @@ namespace ShoppingCart_Team7.Controllers
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Product> products = dbContext.Products.ToList();
-            List<Purchase> sortPurchases = Sort(purchases, id);
+            List<Purchase> sortPurchases = Sort(purchases, products, id);
             List<Review> reviews = dbContext.Reviews.ToList();
 
             List<PurchaseCodes> codes = new List<PurchaseCodes>();
@@ -78,7 +78,7 @@ namespace ShoppingCart_Team7.Controllers
             return View();
         }
 
-        public List<Purchase> Sort(List<Purchase> p, int id)
+        public List<Purchase> Sort(List<Purchase> p, List<Product> pdt, int id)
         {
             DateTime today = DateTime.Today;
             DateTime endMonth = DateTime.Today.AddDays(-30);
@@ -105,6 +105,23 @@ namespace ShoppingCart_Team7.Controllers
                 var purchases =
                 from pur in p
                 where pur.PurchaseDate <= today && pur.PurchaseDate >= endYear
+                select pur;
+
+                List<Purchase> purchaseList = new List<Purchase>();
+
+                foreach (Purchase pc in purchases)
+                {
+                    purchaseList.Add(pc);
+                }
+                return purchaseList;
+            }
+            if (id == 6)
+            {
+                var purchases =
+                from pur in p
+                from pd in pdt
+                where pur.ProductId ==pd.Id
+                orderby pd.ProductName
                 select pur;
 
                 List<Purchase> purchaseList = new List<Purchase>();
