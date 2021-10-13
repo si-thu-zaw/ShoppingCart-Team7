@@ -3,6 +3,7 @@
     List<Purchase> purchases = (List<Purchase>)ViewData["purchases"];
     List<Product> products = (List<Product>)ViewData["products"];
     List<PurchaseCodes> codes = (List<PurchaseCodes>)ViewData["codes"];
+    List<Review> reviews = (List<Review>)ViewData["reviews"];
     int pdtCount = codes.Count();
 
     string searchStr = (string)ViewData["searchStr"];
@@ -32,9 +33,9 @@
                     Sort By
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#new">Date (Newest)</a></li>
-                    <li><a class="dropdown-item" href="#old">Date (Latest)</a></li>
-                    <li><a class="dropdown-item" href="#name">Product Name</a></li>
+                    <li><a class="dropdown-item" href="/MyPurchase/Index/4">Date (Newest)</a></li>
+                    <li><a class="dropdown-item" href="/MyPurchase/Index/5">Date (Oldest)</a></li>
+                    <li><a class="dropdown-item" href="/MyPurchase/Index/6">Product Name</a></li>
                 </ul>
             </div>
         </div>
@@ -65,7 +66,7 @@
                 {
                     string[] productInfos = c.PID_PDATE.Split(',');
                     string productInfo = productInfos[0].Substring(14,36);
-                    string purchaseDate = productInfos[1].Substring(16,20);
+                    string purchaseDate = productInfos[1].Substring(16, 21).TrimEnd('}');
                     List<Guid> ActivationCodes = c.ActivationCodes;
 
                     Product pdt = products.FirstOrDefault(x => x.Id.ToString() == productInfo);
@@ -124,6 +125,24 @@
                                             </select>
                                         </dd>
                                     </dl>
+                                </div>
+                                <div class="row" id="quantity">
+                                    <div class="col-4"></div>
+                                    <div class="col-7 mt-5">
+                                        <a class="btn btn-warning btn-block" href="#" role="button">
+                                        @{ 
+                                            Review review = reviews.FirstOrDefault(x => x.ProductId == pdt.Id);
+                                            if (review == null)
+                                            {
+                                                @:Leave Review
+                                            }
+                                            else
+                                            {
+                                                @:See Review
+                                            }
+                                        }
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

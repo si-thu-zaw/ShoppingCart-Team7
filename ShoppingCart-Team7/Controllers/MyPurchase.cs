@@ -25,20 +25,54 @@ namespace ShoppingCart_Team7.Controllers
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Product> products = dbContext.Products.ToList();
             List<Purchase> sortPurchases = Sort(purchases, id);
+            List<Review> reviews = dbContext.Reviews.ToList();
 
-            List<PurchaseCodes> codes = (List<PurchaseCodes>)(from p in sortPurchases
-                                                                     group p by new { p.ProductId, p.PurchaseDate } into grp
-                                                                     select new PurchaseCodes()
-                                                                     {
-                                                                         PID_PDATE = grp.Key.ToString(),
-                                                                         ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
-                                                                         Quantity = grp.Select(a => a.ActivationCode).Count()
-                                                                     }).ToList();
+            List<PurchaseCodes> codes = new List<PurchaseCodes>();
+
+            if (id==4)
+            {
+                codes = (List<PurchaseCodes>)(from p in sortPurchases
+                                                group p by new { p.ProductId, p.PurchaseDate } into grp
+                                                select new PurchaseCodes()
+                                                {
+                                                    PID_PDATE = grp.Key.ToString(),
+                                                    ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                    Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                                    Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17))
+                                                }).OrderByDescending(x=>x.Date).ToList();
+            }
+            else if (id == 5)
+            {
+                codes = (List<PurchaseCodes>)(from p in sortPurchases
+                                              group p by new { p.ProductId, p.PurchaseDate } into grp
+                                              select new PurchaseCodes()
+                                              {
+                                                  PID_PDATE = grp.Key.ToString(),
+                                                  ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                  Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17))
+                                              }).OrderBy(x=>x.Date).ToList();
+            }
+            else
+            {
+                codes = (List<PurchaseCodes>)(from p in sortPurchases
+                                              group p by new { p.ProductId, p.PurchaseDate } into grp
+                                              select new PurchaseCodes()
+                                              {
+                                                  PID_PDATE = grp.Key.ToString(),
+                                                  ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                  Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17))
+                                              }).ToList();
+            }
+
+
 
             ViewData["codes"] = codes;
 
             ViewData["purchases"] = sortPurchases;
             ViewData["products"] = products;
+            ViewData["reviews"] = reviews;
             ViewData["searchStr"] = "";
 
             return View();
@@ -86,7 +120,7 @@ namespace ShoppingCart_Team7.Controllers
 
         }
 
-        public IActionResult Search(string searchStr)
+        public IActionResult Search(string searchStr, int id)
         {
             if (searchStr == null)
             {
@@ -99,6 +133,8 @@ namespace ShoppingCart_Team7.Controllers
             List<Product> products = dbContext.Products.Where(x => x.ProductName.ToLower().Contains(searchStrLower)).ToList();
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Purchase> sortedPurchases = new List<Purchase>();
+            List<Review> reviews = dbContext.Reviews.ToList();
+
             foreach (Product p in products)
             {
                 foreach (Purchase pur in purchases)
@@ -123,7 +159,7 @@ namespace ShoppingCart_Team7.Controllers
             ViewData["purchases"] = purchases;
             ViewData["products"] = products;
             ViewData["searchStr"] = "";
-
+            ViewData["reviews"] = reviews;
 
             return View("Index");
         }
