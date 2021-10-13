@@ -18,11 +18,12 @@ namespace ShoppingCart_Team7.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult Index(string ProductId)
+        public IActionResult Index(Guid Id)
         {
             // use GetAllDetails function to get info from BD products table(Ado.NET)
-            Product product = GetAllDetails(ProductId);
-            ViewData["ProductId"] = ProductId;
+            //Product product = dbContext.Products.FirstOrDefault(x => x.Id == Id);
+            //Product product = dbContext.Products.FirstOrDefault(x => x.Id.ToString().ToUpper() == ProductId);
+            Product product = GetAllDetails(Id);
             ViewData["product"] = product;
 
             // get rating info from DB reviews table(LINQ)
@@ -31,7 +32,7 @@ namespace ShoppingCart_Team7.Controllers
             int arating = 0;
             int arating_num = 0;
             foreach (var grp in ratings)
-                if (grp.Key.ToString().ToUpper() == ProductId)
+                if (grp.Key == Id)
                 {
                     arating = (int)Math.Round(grp.Average(x => x.Rating));
                     arating_num = grp.Count();
@@ -39,7 +40,7 @@ namespace ShoppingCart_Team7.Controllers
 
             ViewData["rating_num"] = arating_num;
             ViewData["rating"] = arating;
-            ViewData["Recommendation"] = GetRecommendations(ProductId);
+            ViewData["Recommendation"] = GetRecommendations(Id);
 
             // ger review number from DB reviews table
 
@@ -48,14 +49,14 @@ namespace ShoppingCart_Team7.Controllers
 
         // Get AllDetail funtion
         protected static readonly string connectionString = "Server=localhost;Database=ShoppingCartDB; Integrated Security=true";
-        public static Product GetAllDetails(string ProductId)
+        public static Product GetAllDetails(Guid Id)
         {
             Product product = null;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 string sql = @"select Products.Id, Products.ProductName, Products.Price, Products.Description, Products.ImageSrc, Products.Category from Products
-                    where Products.Id = '" + ProductId + "'";
+                    where Products.Id = '" + Id + "'";
 
                 Debug.WriteLine(sql);
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -77,7 +78,7 @@ namespace ShoppingCart_Team7.Controllers
         }
 
         // GetRecommendations function
-        public List<Product> GetRecommendations(string Id)
+        public List<Product> GetRecommendations(Guid Id)
         {
             Random r = new Random();
             List<Product> Recommendations = new List<Product>();
@@ -86,7 +87,7 @@ namespace ShoppingCart_Team7.Controllers
             int SelectionCount = 4; // Number of recommendations to return
 
             // Find list of purchases with the same Product ID
-            List<Purchase> SalesWithSameProductId = dbContext.Purchases.Where(x => x.ProductId.ToString() == Id).ToList();
+            List<Purchase> SalesWithSameProductId = dbContext.Purchases.Where(x => x.ProductId == Id).ToList();
 
             // If no one has bought this item before, update selectionCount so it won't return a recommendation list
             if (SalesWithSameProductId.Count() == 0)
@@ -102,7 +103,7 @@ namespace ShoppingCart_Team7.Controllers
             // Get all past purchases made by users who bought the same book
             foreach (Guid user in Users)
             {
-                List<Purchase> UserPurchase = dbContext.Purchases.Where(x => x.UserId == user && x.ProductId.ToString() != Id).ToList();
+                List<Purchase> UserPurchase = dbContext.Purchases.Where(x => x.UserId == user && x.ProductId != Id).ToList();
 
                 // Append list of Purchases to
                 PastPurchases.AddRange(UserPurchase);
