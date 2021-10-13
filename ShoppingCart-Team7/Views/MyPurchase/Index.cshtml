@@ -88,7 +88,7 @@
                                     <h6 class="card-title" id="productName">Book Description:</h6>
                                     <p class="card-text" style="font-size:13px;text-align:justify">@pdt.Description</p>
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal" onclick="myFunction()">
                                             Download
                                         </button>
                                     </div>
@@ -168,24 +168,50 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header" style="background-color:powderblue;">
-                    <h4 class="modal-title">Awesome</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h4 class="modal-title" id="in2"></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="myFunction2()"></button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    Successfully downloaded. Thank You for your purchase
+                <div class="modal-body" id="in" style="text-align:center">
+                    Downloading.....
+                </div>
+                <div id="myElem">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+                    </div>
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="myFunction2()">Close</button>
                 </div>
 
             </div>
         </div>
     </div>
 
+    <script>
+
+        var elem = document.getElementById("myElem");
+        var inner = document.getElementById("in");
+        var inner2 = document.getElementById("in2");
+        function myFunction() {
+            setTimeout(function () {
+                elem.style.display = "none";
+                inner.innerHTML = "Successfully downloaded. Thank You for your purchase";
+                inner2.innerHTML = "Awesome"
+            }, 3000);
+        }
+        function myFunction2() {
+            setTimeout(function () {
+                elem.style.display = "block";
+                inner.innerHTML = "Downloading.....";
+                inner2.innerHTML = ""
+            }, 500);
+        }
+
+    </script>
 
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
 
