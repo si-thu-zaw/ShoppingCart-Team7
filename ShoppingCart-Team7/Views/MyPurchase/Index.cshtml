@@ -65,7 +65,7 @@
                 foreach (PurchaseCodes c in codes)
                 {
                     string[] productInfos = c.PID_PDATE.Split(',');
-                    string productInfo = productInfos[0].Substring(14,36);
+                    string productInfo = productInfos[0].Substring(14, 36);
                     string purchaseDate = productInfos[1].Substring(16, 21).TrimEnd('}');
                     List<Guid> ActivationCodes = c.ActivationCodes;
 
@@ -152,7 +152,9 @@
                             </div>
                         </div>
                     }
+                    <hr />
                 };
+
             }
         }
     </div>
@@ -190,6 +192,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
 
