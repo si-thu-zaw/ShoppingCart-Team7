@@ -24,8 +24,9 @@ namespace ShoppingCart_Team7.Controllers
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Product> products = dbContext.Products.ToList();
+            List<Purchase> sortPurchases = Sort(purchases, id);
 
-            List<PurchaseCodes> codes = (List<PurchaseCodes>)(from p in purchases
+            List<PurchaseCodes> codes = (List<PurchaseCodes>)(from p in sortPurchases
                                                                      group p by new { p.ProductId, p.PurchaseDate } into grp
                                                                      select new PurchaseCodes()
                                                                      {
@@ -36,7 +37,7 @@ namespace ShoppingCart_Team7.Controllers
 
             ViewData["codes"] = codes;
 
-            ViewData["purchases"] = Sort(purchases, id);
+            ViewData["purchases"] = sortPurchases;
             ViewData["products"] = products;
             ViewData["searchStr"] = "";
 
@@ -45,13 +46,16 @@ namespace ShoppingCart_Team7.Controllers
 
         public List<Purchase> Sort(List<Purchase> p, int id)
         {
-            DateTime d = DateTime.Today;
+            DateTime today = DateTime.Today;
+            DateTime endMonth = DateTime.Today.AddDays(-30);
+            DateTime endYear = DateTime.Today.AddYears(-1);
+
 
             if (id == 2)
             {
                 var purchases =
                 from pur in p
-                where pur.PurchaseDate.Month <= d.Month && pur.PurchaseDate.Month >= d.Month - 1
+                where pur.PurchaseDate <= today  && pur.PurchaseDate >= endMonth
                 select pur;
 
                 List<Purchase> purchaseList = new List<Purchase>();
@@ -66,7 +70,7 @@ namespace ShoppingCart_Team7.Controllers
             {
                 var purchases =
                 from pur in p
-                where pur.PurchaseDate.Year <= d.Year && pur.PurchaseDate.Year >= d.Year - 1
+                where pur.PurchaseDate <= today && pur.PurchaseDate >= endYear
                 select pur;
 
                 List<Purchase> purchaseList = new List<Purchase>();
@@ -82,27 +86,44 @@ namespace ShoppingCart_Team7.Controllers
 
         }
 
-        public IActionResult Search(int id, string searchStr)
+        public IActionResult Search(string searchStr)
         {
             if (searchStr == null)
             {
                 searchStr = "";
             }
-
+            string searchStrLower = searchStr.ToLower();
             string username = "charles";
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
+
+            List<Product> products = dbContext.Products.Where(x => x.ProductName.ToLower().Contains(searchStrLower)).ToList();
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
-            List<Product> products = dbContext.Products.Where(x => x.ProductName.Contains(searchStr)).ToList();
-
-
-            foreach (Product pdt in products)
+            List<Purchase> sortedPurchases = new List<Purchase>();
+            foreach (Product p in products)
             {
-                purchases = purchases.Where(x => x.ProductId == pdt.Id).ToList();
+                foreach (Purchase pur in purchases)
+                {
+                    if (p.Id==pur.ProductId)
+                    {
+                        sortedPurchases.Add(pur);
+                    }
+                }
             }
+            List<PurchaseCodes> codes = (List<PurchaseCodes>)(from p in sortedPurchases
+                                                              group p by new { p.ProductId, p.PurchaseDate } into grp
+                                                              select new PurchaseCodes()
+                                                              {
+                                                                  PID_PDATE = grp.Key.ToString(),
+                                                                  ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                                  Quantity = grp.Select(a => a.ActivationCode).Count()
+                                                              }).ToList();
+
+            ViewData["codes"] = codes;
 
             ViewData["purchases"] = purchases;
             ViewData["products"] = products;
-            ViewData["searchStr"] = searchStr;
+            ViewData["searchStr"] = "";
+
 
             return View("Index");
         }
