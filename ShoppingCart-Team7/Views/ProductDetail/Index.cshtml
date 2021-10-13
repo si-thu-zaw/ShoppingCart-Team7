@@ -4,7 +4,9 @@
 
 @{
     var product = (Product)ViewData["product"];
-    var rating = ViewData["rating"];
+    int rating = (int)ViewData["rating"];
+    int rating_num = (int)ViewData["rating_num"];
+    List<Product> recommendation = (List<Product>)ViewData["Recommendation"];
 }
 
 
@@ -15,63 +17,137 @@
             margin-right: 120px;
         }
 
-        .navigation {
-            margin-bottom: 20px;
-        }
 
-        .main {
-            position: relative;
-        }
 
-        .detail {
-        }
+        .clearfix::after {
 
-        .detailimg {
-            border: 10px solid #808080;
-            float: left;
-            width: 300px;
         }
 
         .detailbox {
-            margin-left: 400px;
+            margin-top: 70px;
+            margin-bottom: 30px;
+            width: 65%;
+            margin-left: 600px;
         }
 
-        .nametext {
+        .detailimg {
+            border: 20px solid #ffffff;
+            float: left;
+            width: 500px;
+            height: 700px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        .productCatagory {
             color: #808080;
-            font-size: 40px;
+            font-size: 30px;
             font-weight: bold;
         }
 
+        .productnametext {
+            text-align: left;
+            color: #363636;
+            font-size: 60px;
+            font-weight: 900;
+        }
+
+        .rating {
+            font-size:20px;
+        }
+
+        .review_nav {
+            color: #808080;
+            font-size: 20px;
+        }
+
         .pricetext {
+            text-align: left;
             color: #CD5C5C;
-            font-size: 30px;
+            font-size: 40px;
             font-weight: bold;
             margin-top: 40px;
         }
 
-        .comment {
+        .description {
+            color: #808080;
+            font-size: 18px;
         }
 
+        .detail-buy-button {
+            background-color: orange;
+            width: auto;
+            color: #363636;
+            font-size: 40px;
+            font-weight: 700;
+            padding-left: 40px;
+            padding-right: 40px;
+            margin-top: 20px;
+        }
+
+        .rectext {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #808080;
+            font-size: 25px;
+        }
+
+        .checked {
+            color: orange;
+        }
         .recommendation {
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="whole">
-    <button class="navigation">back to home</button>
-
-    <div class="main">
-        <div class="detail">
-            <img class="detailimg" src="@product.ImageSrc" alt="@product.ProductName image">
-            <div class="detailbox">
-                <h2 class="productnametext">@product.ProductName </h2>
-                <p class="pricetext">$ @product.Price</p>
-                <p>Genre<br />@product.Category</p>
-                <p>Description<br />@product.Description</p>
-                <button>add to cart</button>
-                <p>rating @rating</p>
+    <div class="clearfix">
+        <img class="detailimg" src="@product.ImageSrc" alt="@product.ProductName image">
+        <div class="detailbox">
+            <p class="productCatagory">@product.Category</p>
+            <h2 class="productnametext">@product.ProductName </h2>
+            <div class="rating">
+                @{
+                    for (int i = 0; i < rating; i++)
+                    {
+                        @:<span class="fa fa-star checked"></span>
+                    }
+                    for (int i = 0; i < (5 - rating); i++)
+                    {
+                        @:<span class="fa fa-star"></span>
+                    }
+                }
+                <p>@rating_num reviews</p>
             </div>
+            <p class="description"><br />@product.Description</p>
+            <p class="pricetext"> @product.Price.ToString("C")</p>
+            <button class="btn-dark btn-block detail-buy-button">Add to cart</button>
+        </div>
+    </div>
+
+
+    <div class="recommendation">
+        <h4 class="rectext">Customers who bought this also bought: </h4>
+        <div class="row">
+            @{if (recommendation != null)
+                    foreach (Product rec in recommendation)
+                    {
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                        <div class="card home-card">
+                            <a href="/productdetail/index/?productid=@rec.Id">
+                                <img class="home-pic" src=@rec.ImageSrc alt=@rec.ProductName />
+                                <div class="card-body">
+                                    <h6 class="card-title">@rec.ProductName</h6>
+                                </div>
+                            </a>
+                            <button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button>
+                        </div>
+                    </div>
+                    }
+            }
+
         </div>
     </div>
 </body>
 
+<!--add link to gallary-->
