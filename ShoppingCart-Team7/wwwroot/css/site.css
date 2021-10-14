@@ -126,6 +126,16 @@ body {
 }
 
 /* Home Styles*/
+.bestsellers, .toprated, .prod-det-rec {
+    background-color: #F4F4F4;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.bestsellers, .toprated, .prod-det-rec h4 {
+    padding-bottom: 10px;
+}
 
 .home-pic {
     height: 300px;
@@ -157,4 +167,9 @@ body {
 .home-card a {
     text-decoration: none;
     color: black;
+}
+
+/* Product Detail Style*/
+ {
+
 }
