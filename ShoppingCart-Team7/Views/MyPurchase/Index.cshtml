@@ -1,4 +1,4 @@
-﻿@{
+﻿@{      ViewData["Title"] = "My Purchase";
 
     List<Purchase> purchases = (List<Purchase>)ViewData["purchases"];
     List<Product> products = (List<Product>)ViewData["products"];
@@ -82,7 +82,7 @@
 
 
                             <!--Purchase Download-->
-                            <div class="card col-3 mb-5 pt-1" id="details">
+                            <div class="card col-3 mb-5 pt-1 shadow rounded" id="details">
                                 <img class="card-img-top mx-auto" src="@pdt.ImageSrc" alt="Product image" style="width:90%; height:320px" id="image">
                                 <div class="card-body">
                                     <h6 class="card-title" id="productName">Book Description:</h6>
