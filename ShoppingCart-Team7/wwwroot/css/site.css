@@ -120,6 +120,11 @@ body {
     width: 95%;
 }
 
+.gallery-card a {
+    text-decoration: none;
+    color: black;
+}
+
 /* Home Styles*/
 .bestsellers, .toprated, .prod-det-rec {
     background-color: #F4F4F4;
