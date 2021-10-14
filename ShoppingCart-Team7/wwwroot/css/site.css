@@ -182,3 +182,15 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.pdtCatagory {
+    color: #808080;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.pdtnametext {
+    text-align: left;
+    color: #363636;
+    font-size: 30px;
+    font-weight: 900;
+}
