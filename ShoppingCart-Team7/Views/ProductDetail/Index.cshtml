@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "ProductDetail";
+    ViewData["Title"] = "Product Detail";
 }
 
 @{
@@ -7,8 +7,10 @@
     int rating = (int)ViewData["rating"];
     int rating_num = (int)ViewData["rating_num"];
     List<Product> recommendation = (List<Product>)ViewData["Recommendation"];
-}
 
+    List<Review> aReviewList = (List<Review>)ViewData["aReviewList"];
+    List<string> userNameList = (List<string>)ViewData["userNameList"];
+}
 
 <head>
     <style>
@@ -17,15 +19,12 @@
             margin-right: 120px;
         }
 
-
-
         .clearfix::after {
-
         }
 
         .detailbox {
             margin-top: 70px;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
             width: 65%;
             margin-left: 600px;
         }
@@ -52,7 +51,9 @@
         }
 
         .rating {
-            font-size:20px;
+            margin-top:20px;
+            margin-bottom:20px;
+            font-size: 30px;
         }
 
         .review_nav {
@@ -65,18 +66,18 @@
             color: #CD5C5C;
             font-size: 40px;
             font-weight: bold;
-            margin-top: 40px;
+            margin-top: 100px;
         }
 
         .description {
             color: #808080;
-            font-size: 18px;
+            font-size: 22px;
         }
 
         .detail-buy-button {
-            background-color: orange;
+            background-color: darkcyan;
             width: auto;
-            color: #363636;
+            color: #ffffff;
             font-size: 40px;
             font-weight: 700;
             padding-left: 40px;
@@ -85,15 +86,39 @@
         }
 
         .rectext {
-            margin-top: 20px;
+            margin-top: 25px;
             margin-bottom: 20px;
             color: #808080;
-            font-size: 25px;
+            font-size: 35px;
         }
 
         .checked {
             color: orange;
         }
+
+        .reviewBox{
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+
+        .reviewName{
+            color:darkcyan;
+            font-size:25px;
+            font-weight:700;
+        }
+
+        .reviewDate {
+            font-size:20px;
+        }
+
+        .reviewComment{
+            font-size:20px;
+        }
+
+        .reviewRating {
+            font-size: 15px;
+        }
+
         .recommendation {
         }
     </style>
@@ -117,37 +142,70 @@
                         @:<span class="fa fa-star"></span>
                     }
                 }
-                <p>@rating_num reviews</p>
+                <a href ="#review">@rating_num reviews</a>
             </div>
             <p class="description"><br />@product.Description</p>
-            <p class="pricetext"> @product.Price.ToString("C")</p>
+            <p class="pricetext"> $ @product.Price.ToString("0.00")</p>
             <button class="btn-dark btn-block detail-buy-button">Add to cart</button>
         </div>
     </div>
 
 
+
+
     <div class="recommendation">
-        <h4 class="rectext">Customers who bought this also bought: </h4>
+        <h4 class="rectext">Customers who bought this also bought </h4>
         <div class="row">
             @{if (recommendation != null)
                     foreach (Product rec in recommendation)
                     {
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <div class="card home-card">
-                            <a href="/productdetail/index/?id=@rec.Id">
-                                <img class="home-pic" src=@rec.ImageSrc alt=@rec.ProductName />
-                                <div class="card-body">
-                                    <h6 class="card-title">@rec.ProductName</h6>
-                                </div>
-                            </a>
-                            <button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <div class="card home-card">
+                                <a href="/productdetail/index/?id=@rec.Id">
+                                    <img class="home-pic" src=@rec.ImageSrc alt=@rec.ProductName />
+                                    <div class="card-body">
+                                        <h6 class="card-title" align="center">@rec.ProductName</h6>
+                                    </div>
+                                </a>
+                                <button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button>
+                            </div>
                         </div>
-                    </div>
                     }
             }
 
         </div>
     </div>
-</body>
 
+
+    <div>
+        <h4 class="rectext" id="review">Customer reviews</h4>
+        <div class="reviewBox">
+
+            @{
+                for (int i = 0; i < aReviewList.Count; i++)
+                {
+                    <p><span class="reviewName">@userNameList[i]</span>   <span class="">   Reviewed on @aReviewList[i].ReviewDate.Day / @aReviewList[i].ReviewDate.Month / @aReviewList[i].ReviewDate.Year</span><br /></p>
+                    <div class="reviewRating">
+                        <p>
+                            @{
+                                for (int j = 0; j < aReviewList[i].Rating; j++)
+                                {
+                                    @:<span class="fa fa-star checked"></span>
+                                }
+                                for (int j = 0; j < (5 - aReviewList[i].Rating); j++)
+                                {
+                                    @:<span class="fa fa-star"></span>
+                                }
+                            }
+                            (@aReviewList[i].Rating / 5)
+                        </p>
+
+                    </div>
+                    <p class="reviewComment">@aReviewList[i].Comments<br /></p>
+
+                }
+            }
+        </div>
+    </div>
+</body>
 <!--add link to gallary-->

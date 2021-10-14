@@ -20,18 +20,16 @@ namespace ShoppingCart_Team7.Controllers
 
         public IActionResult Index(Guid Id)
         {
-            // use GetAllDetails function to get info from BD products table(Ado.NET)
-            //Product product = dbContext.Products.FirstOrDefault(x => x.Id == Id);
-            //Product product = dbContext.Products.FirstOrDefault(x => x.Id.ToString().ToUpper() == ProductId);
+            // get product detail from DB product table
             Product product = GetAllDetails(Id);
             ViewData["product"] = product;
 
-            // get rating info from DB reviews table(LINQ)
-            List<Review> reviewList = dbContext.Reviews.ToList();
-            var ratings = reviewList.GroupBy(x => x.ProductId);
+            // get rating count and average rating from DB reviews table(LINQ)
+            List<Review> allreviewList = dbContext.Reviews.ToList();
+            var ratingsPerProduct = allreviewList.GroupBy(x => x.ProductId);
             int arating = 0;
             int arating_num = 0;
-            foreach (var grp in ratings)
+            foreach (var grp in ratingsPerProduct)
                 if (grp.Key == Id)
                 {
                     arating = (int)Math.Round(grp.Average(x => x.Rating));
@@ -40,9 +38,23 @@ namespace ShoppingCart_Team7.Controllers
 
             ViewData["rating_num"] = arating_num;
             ViewData["rating"] = arating;
-            ViewData["Recommendation"] = GetRecommendations(Id);
 
-            // ger review number from DB reviews table
+            // get per review detail from DB reviews table
+            List<Review> aReviewList = dbContext.Reviews.Where(x => x.ProductId == Id).ToList();
+
+            List<string> userNameList = new List<string>();
+
+            foreach (var i in aReviewList)
+            {
+                userNameList.Add(GetReviewUser(i.Id)[0].ToString().ToUpper() + GetReviewUser(i.Id).Substring(1));
+            }
+            
+
+            ViewData["userNameList"] = userNameList;
+            ViewData["aReviewList"] = aReviewList;
+
+            // get recommendation
+            ViewData["Recommendation"] = GetRecommendations(Id);
 
             return View();
         }
@@ -75,6 +87,29 @@ namespace ShoppingCart_Team7.Controllers
                 };
             }
             return product;
+        }
+
+        // GetReviewUser
+        public string GetReviewUser(Guid ReviewId)
+        {
+            string userName = "";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = @"select Users.UserName from Purchases, users, Reviews 
+                    where Reviews.PurchasesId = Purchases.Id
+                    and Purchases.UserId = Users.Id
+                    and Reviews.Id =  '" + ReviewId + "'";
+
+                Debug.WriteLine(sql);
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    userName = (string)reader["UserName"];
+                };
+            }
+            return userName;
         }
 
         // GetRecommendations function
