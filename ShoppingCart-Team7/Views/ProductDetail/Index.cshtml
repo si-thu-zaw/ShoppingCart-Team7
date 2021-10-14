@@ -20,6 +20,7 @@
         }
 
         .clearfix::after {
+            margin-bottom: 20px;
         }
 
         .detailbox {
@@ -142,7 +143,7 @@
                         @:<span class="fa fa-star"></span>
                     }
                 }
-                <a href ="#review">@rating_num reviews</a>
+                <a href="#review">@rating_num reviews</a>
             </div>
             <p class="description"><br />@product.Description</p>
             <p class="pricetext"> $ @product.Price.ToString("0.00")</p>
@@ -150,7 +151,7 @@
         </div>
     </div>
 
-
+    <hr />
 
 
     <div class="recommendation">
@@ -176,6 +177,7 @@
         </div>
     </div>
 
+    <hr />
 
     <div>
         <h4 class="rectext" id="review">Customer reviews</h4>
