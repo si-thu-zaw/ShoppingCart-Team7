@@ -120,6 +120,11 @@ body {
     width: 95%;
 }
 
+.gallery-card a {
+    text-decoration: none;
+    color: black;
+}
+
 /* Home Styles*/
 
 .home-pic {
