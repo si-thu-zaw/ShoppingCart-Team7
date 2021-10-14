@@ -16,7 +16,9 @@
                 <td><img src=@item.ProductImg style="float:left" width="5%" height="5%">@item.ProductName</td>
                 @*<td width="25%">@item.ProductName</td>*@
                 <td width="10%">$@item.Price</td>
-                <td width="10%">Quantity: @item.Quantity</td>
+                <td width="10%"><form action="~/changequantity"><input type="hidden" name="id" value="@item.CartID" /> Quantity: <input type="number" name="quantity" value="@item.Quantity" /><input type="submit" value="Submit"></form></td>
+                <td></td>
+                <td><a href="~/removefromcart/@item.CartID">Delete</a></td>
             </tr>
 
             <br />

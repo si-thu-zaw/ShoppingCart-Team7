@@ -19,7 +19,7 @@ namespace ShoppingCart_Team7.Controllers
 
         public IActionResult Index()
         {
-            string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
+            string userid = "d58ff680-748b-4c90-b549-08d98ed74380";
             List<CartItems> anotherCartList = new List<CartItems>();
             anotherCartList = dbContext.Carts.Join(
                 dbContext.Products,
@@ -31,7 +31,8 @@ namespace ShoppingCart_Team7.Controllers
                     ProductImg = Product.ImageSrc,
                     Quantity = Cart.Quantity,
                     Price = Product.Price,
-                    User = Cart.UserId.ToString()
+                    User = Cart.UserId.ToString(),
+                    CartID = Cart.Id.ToString()
                 }
                 ).Where(x =>
                     x.User.Equals(userid)
@@ -52,6 +53,7 @@ namespace ShoppingCart_Team7.Controllers
 
             return View();
         }
+
         [Route("addtocart/{id}")]
         public IActionResult AddToCart(string id)
         {
@@ -89,6 +91,68 @@ namespace ShoppingCart_Team7.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [Route("removefromcart/{id}")]
+        public IActionResult RemoveFromCart(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            Cart cart = dbContext.Carts.FirstOrDefault(x => x.Id == Guid.Parse(id));
+
+            dbContext.Carts.Remove(cart);
+
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+        [Route("increasequantity/{id}")]
+        public IActionResult IncreaseQuantity(string id)
+        {
+            string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
+            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
+
+            cart.Quantity++;
+
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("decreasequantity/{id}")]
+        public IActionResult DecreaseQuantity(string id)
+        {
+            string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
+            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
+
+            cart.Quantity--;
+
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [Route("changequantity")]
+        public IActionResult ChangeQuantity(string id, int quantity)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            Cart cart = dbContext.Carts.FirstOrDefault(x => x.Id == Guid.Parse(id));
+
+            cart.Quantity = quantity;
+
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
     }
 
     

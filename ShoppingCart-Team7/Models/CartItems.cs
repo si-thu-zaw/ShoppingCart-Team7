@@ -12,5 +12,6 @@ namespace ShoppingCart_Team7.Models
         public int Quantity { get; set; }
         public float Price { get; set; }
         public string User { get; set; }
+        public string CartID { get; set; }
     }
 }
