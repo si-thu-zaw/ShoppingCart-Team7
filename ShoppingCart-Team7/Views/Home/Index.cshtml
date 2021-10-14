@@ -10,8 +10,8 @@
 
 <div class="recommendations">
     <div class="bestsellers">
-        <h5>Best Sellers</h5>
-        <div class="row">
+        <h4>Best Sellers</h4>
+        <div class="row home-row">
             @{
                 foreach (Product bs in TopProdByPurchase)
                 {
@@ -32,7 +32,7 @@
     </div>
 
     <div class="toprated">
-        <h5>Top Rated E-Books</h5>
+        <h4>Top Rated</h4>
         <div class="row">
             @{
                 foreach (Product ts in TopProdByRatings)
