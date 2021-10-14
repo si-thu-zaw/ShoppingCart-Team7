@@ -1,11 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     List<Product> ProductList = (List<Product>)ViewData["productlist"];
     string searchstring = (string)ViewData["searchstring"];
 }
 
+<h2>Products</h2>
 
 <div class="">
     <div class="form-group">
@@ -19,17 +17,18 @@
             {
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="gallery-card card">
-                        <img src="@product.ImageSrc" alt="@product.ProductName book cover" class="gallery-pic" />
-                        <div class="">
+                        <a href="~/Product/Details/@product.Id">
+                            <img src="@product.ImageSrc" alt="@product.ProductName book cover" class="gallery-pic" />
                             <h5 class="text-truncate card-title">@product.ProductName</h5>
                             <div class="gallery-description card-text">
                                 <p>@product.Description</p>
                             </div>
-                            <button class="btn-dark btn-block gallery-buy-button">$@product.Price Add to Cart</button>
+                        </a>
+                        <button class="btn-dark btn-block gallery-buy-button">$@product.Price Add to Cart</button>
 
-                        </div>
                     </div>
                 </div>
+
             }
         }
     </div>
