@@ -19,7 +19,7 @@ namespace ShoppingCart_Team7.Controllers
 
         public IActionResult Index()
         {
-            string userid = "d58ff680-748b-4c90-b549-08d98ed74380";
+            string userid = "A4533357-1B91-40AA-DA50-08D98D9D73B2";
             List<CartItems> anotherCartList = new List<CartItems>();
             anotherCartList = dbContext.Carts.Join(
                 dbContext.Products,
@@ -37,14 +37,21 @@ namespace ShoppingCart_Team7.Controllers
                 ).Where(x =>
                     x.User.Equals(userid)
                 ).ToList();
+
+            // compute price of every item in cart
+            var iter =
+                from cart in anotherCartList
+                select new { itemsPrice = cart.Price*cart.Quantity};
+
+            //compute total price in cart
+            var totalPrice = 0f;
+            foreach(var cart in iter)
+            {
+                totalPrice += cart.itemsPrice;
+            }
+
+            ViewData["totalprice"] = totalPrice;
             ViewData["whatisthis"] = anotherCartList;
-
-            //anotherCartList =
-            //    from cart in dbContext.Carts
-            //    join product in dbContext.Products on cart.ProductId equals product.Id
-            //    select new { ProductName = product.ProductName, Quantity = cart.Quantity, Price = product.Price, User = cart.UserId.ToString() }
-            //    where 
-
 
             //foreach (var thingy in anotherCartList)
             //{
@@ -127,7 +134,10 @@ namespace ShoppingCart_Team7.Controllers
 
         }
 
+        [Route("checkout/{id}")]
+        public IActionResult Checkout(string id)
+        {
+            List<Cart>cart=dbContext.Carts.Where(x =>x.)
+        }
     }
-
-    
 }
