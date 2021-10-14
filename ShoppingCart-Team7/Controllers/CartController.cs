@@ -110,32 +110,6 @@ namespace ShoppingCart_Team7.Controllers
         }
 
 
-        [Route("increasequantity/{id}")]
-        public IActionResult IncreaseQuantity(string id)
-        {
-            string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
-            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
-
-            cart.Quantity++;
-
-            dbContext.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
-        [Route("decreasequantity/{id}")]
-        public IActionResult DecreaseQuantity(string id)
-        {
-            string userid = "71d50ea1-419c-46dc-ef3a-08d98d0741f1";
-            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
-
-            cart.Quantity--;
-
-            dbContext.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
         [Route("changequantity")]
         public IActionResult ChangeQuantity(string id, int quantity)
         {
