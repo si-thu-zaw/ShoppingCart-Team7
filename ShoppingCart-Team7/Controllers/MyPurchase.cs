@@ -132,6 +132,23 @@ namespace ShoppingCart_Team7.Controllers
                 }
                 return purchaseList;
             }
+            if (id == 6)
+            {
+                var purchases =
+                from pur in p
+                from pd in pdt
+                where pur.ProductId == pd.Id
+                orderby pd.ProductName descending
+                select pur;
+
+                List<Purchase> purchaseList = new List<Purchase>();
+
+                foreach (Purchase pc in purchases)
+                {
+                    purchaseList.Add(pc);
+                }
+                return purchaseList;
+            }
 
             return p;
 

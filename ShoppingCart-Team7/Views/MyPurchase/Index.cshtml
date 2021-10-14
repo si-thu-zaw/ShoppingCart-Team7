@@ -35,7 +35,8 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/MyPurchase/Index/4">Date (Newest)</a></li>
                     <li><a class="dropdown-item" href="/MyPurchase/Index/5">Date (Oldest)</a></li>
-                    <li><a class="dropdown-item" href="/MyPurchase/Index/6">Product Name</a></li>
+                    <li><a class="dropdown-item" href="/MyPurchase/Index/6">Product Name (A-Z)</a></li>
+                    <li><a class="dropdown-item" href="/MyPurchase/Index/7">Product Name (Z-A)</a></li>
                 </ul>
             </div>
         </div>
@@ -83,14 +84,17 @@
 
                             <!--Purchase Download-->
                             <div class="card col-3 mb-5 pt-1 shadow rounded" id="details">
-                                <img class="card-img-top mx-auto" src="@pdt.ImageSrc" alt="Product image" style="width:90%; height:320px" id="image">
+                                <img class="card-img-top mx-auto mt-2" src="@pdt.ImageSrc" alt="Product image" style="width:90%; height:320px" id="image">
                                 <div class="card-body">
                                     <h6 class="card-title" id="productName">Book Description:</h6>
-                                    <p class="card-text" style="font-size:13px;text-align:justify">@pdt.Description</p>
+                                    <p class="card-text book-description" style="font-size:13px;text-align:justify">@pdt.Description</p>
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal" onclick="myFunction()">
+                                        <button type="button" class="btn btn-primary btn-block shadow" data-bs-toggle="modal" data-bs-target="#myModal" onclick="myFunction()">
                                             Download
                                         </button>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="~/ProductDetail/Index/@productInfo" style="font-size:10px">For More Product Details </a>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +137,7 @@
                                 <div class="row" id="quantity">
                                     <div class="col-4"></div>
                                     <div class="col-7 mt-5">
-                                        <a class="btn btn-warning btn-block" href="#" role="button">
+                                        <a class="btn btn-warning btn-block shadow" href="#" role="button">
                                             @{
                                                 Review review = reviews.FirstOrDefault(x => x.ProductId == pdt.Id);
                                                 if (review == null)
