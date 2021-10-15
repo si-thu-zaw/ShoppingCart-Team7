@@ -20,8 +20,12 @@ namespace ShoppingCart_Team7.Controllers
 
         public IActionResult Index(int id)
         {
-            string username = "charles";
+            string username = Request.Cookies["Username"];
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
+            if (Buyer==null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Product> products = dbContext.Products.ToList();
             List<Purchase> sortPurchases = Sort(purchases, products, id);
@@ -32,13 +36,13 @@ namespace ShoppingCart_Team7.Controllers
             if (id==4)
             {
                 codes = (List<PurchaseCodes>)(from p in sortPurchases
-                                                group p by new { p.ProductId, p.PurchaseDate } into grp
-                                                select new PurchaseCodes()
-                                                {
-                                                    PID_PDATE = grp.Key.ToString(),
-                                                    ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
-                                                    Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                    Date = grp.Key.ToString().Substring(67, 17)
+                                              group p by new { p.ProductId, p.PurchaseDate } into grp
+                                              select new PurchaseCodes()
+                                              {
+                                                  PID_PDATE = grp.Key.ToString(),
+                                                  ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                  Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
                                                 }).OrderByDescending(x=>x.Date).ToList();
             }
             else if (id == 5)
@@ -50,7 +54,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.ToString().Substring(67, 17)
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
                                               }).OrderBy(x=>x.Date).ToList();
             }
             else
@@ -62,7 +66,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.ToString().Substring(67, 16)
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
                                               }).ToList();
             }
 
