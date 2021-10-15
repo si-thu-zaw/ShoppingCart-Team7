@@ -11,7 +11,7 @@ namespace ShoppingCart_Team7.Models
         public Guid PdtId { get; set; }
         public List<Guid> ActivationCodes { get; set; }
         public int Quantity { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string Name { get; set; }
     }
 }

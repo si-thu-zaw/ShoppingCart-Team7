@@ -173,3 +173,44 @@ body {
  {
 
 }
+
+
+/* Purchase Style*/
+.book-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.pdtCatagory {
+    color: #808080;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.pdtnametext {
+    text-align: left;
+    color: #363636;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+/*Account Style*/
+.ac_tbl {
+    display: inline-block;
+    padding: 0.5em;
+    
+}
+
+.ac_row {
+    display: table-row;
+}
+
+.ac_cell {
+    display: table-cell;
+    padding: 0.1em;
+}
+
+.ac_textred{
+    color:red;
+}
