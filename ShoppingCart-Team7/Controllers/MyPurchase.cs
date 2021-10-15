@@ -36,13 +36,13 @@ namespace ShoppingCart_Team7.Controllers
             if (id==4)
             {
                 codes = (List<PurchaseCodes>)(from p in sortPurchases
-                                                group p by new { p.ProductId, p.PurchaseDate } into grp
-                                                select new PurchaseCodes()
-                                                {
-                                                    PID_PDATE = grp.Key.ToString(),
-                                                    ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
-                                                    Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                    Date = grp.Key.ToString().Substring(67, 17)
+                                              group p by new { p.ProductId, p.PurchaseDate } into grp
+                                              select new PurchaseCodes()
+                                              {
+                                                  PID_PDATE = grp.Key.ToString(),
+                                                  ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                                  Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
                                                 }).OrderByDescending(x=>x.Date).ToList();
             }
             else if (id == 5)
@@ -54,7 +54,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.ToString().Substring(67, 17)
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
                                               }).OrderBy(x=>x.Date).ToList();
             }
             else
@@ -66,7 +66,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.ToString().Substring(67, 16)
+                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
                                               }).ToList();
             }
 
