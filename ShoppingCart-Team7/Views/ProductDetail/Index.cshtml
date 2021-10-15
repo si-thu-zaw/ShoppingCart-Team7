@@ -120,7 +120,8 @@
             font-size: 15px;
         }
 
-        .recommendation {
+        a:hover, a:link {
+            text-decoration: none;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -147,8 +148,8 @@
             </div>
             <p class="description"><br />@product.Description</p>
             <p class="pricetext"> $ @product.Price.ToString("0.00")</p>
-            <button class="btn-dark btn-block detail-buy-button">Add to cart</button>
-        </div>
+            <a href="~/addtocart/@product.Id"><button class="btn-dark btn-block detail-buy-button">Add to cart</button></a>
+</div>
     </div>
 
     <hr />
@@ -168,7 +169,7 @@
                                         <h6 class="card-title" align="center">@rec.ProductName</h6>
                                     </div>
                                 </a>
-                                <button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button>
+                                <a href="~/addtocart/@rec.Id"><button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button></a>
                             </div>
                         </div>
                     }
