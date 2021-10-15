@@ -194,3 +194,23 @@ body {
     font-size: 30px;
     font-weight: 900;
 }
+
+/*Account Style*/
+.ac_tbl {
+    display: inline-block;
+    padding: 0.5em;
+    
+}
+
+.ac_row {
+    display: table-row;
+}
+
+.ac_cell {
+    display: table-cell;
+    padding: 0.1em;
+}
+
+.ac_textred{
+    color:red;
+}

@@ -1,0 +1,40 @@
+﻿
+@{
+    string exist = (string)ViewData["exist"];
+}
+
+
+@if (exist == "N")
+{ 
+<h4 style="text-align:center" class="ac_textred">Pls input correct Username and Password.</h4>
+}
+
+<form id="form" action="/Account/Login" method="POST">
+    <div style="text-align:center">
+        <div class="ac_tbl">
+            <div class="ac_row">
+                <div class="ac_cell">
+                    Username:
+                </div>
+                <div class="ac_cell">
+                    <input id="username" name="username" type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="ac_row">
+                <div class="ac_cell">
+                    Password:
+                </div>
+                <div class="ac_cell">
+                    <input id="password" name="password" type="password" class="form-control" />
+                </div>
+            </div>
+            <div class="ac_row">
+                <div class="ac_cell"></div>
+                <div class="ac_cell" style="text-align: right">
+                    <input type="submit" value="Login" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
