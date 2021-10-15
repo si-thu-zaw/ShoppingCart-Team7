@@ -19,7 +19,7 @@
 <table width="80%">
     @{
         //var cartlist = (new {string ProductName, int Quantity, float Price, string })
-        List<CartItems> CartList = (List<CartItems>)ViewData["whatisthis"];
+        List<CartItems> CartList = (List<CartItems>)ViewData["CartList"];
         foreach (dynamic item in CartList)
         {
             <tr>

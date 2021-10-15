@@ -98,6 +98,119 @@ namespace ShoppingCart_Team7.Controllers
 
             return RedirectToAction("Index");
         } */
+        public IActionResult Index()
+        {
+            List<CartItems> CartList = new List<CartItems>();
+            CartList = GetCart();
+                
+            // compute price of every item in cart
+            var iter =
+                from cart in CartList
+                select new { itemsPrice = cart.Price * cart.Quantity };
+
+            //compute total price in cart
+            var totalPrice = 0f;
+            foreach (var cart in iter)
+            {
+                totalPrice += cart.itemsPrice;
+            }
+
+            ViewData["totalprice"] = totalPrice;
+            ViewData["cartlist"] = CartList;
+
+            return View();
+        }
+
+        public List<CartItems> GetCart()
+        {
+            string userid = GetUserOrSession();
+            List<CartItems> CartList = new List<CartItems>();
+            if (Request.Cookies["SessionId"] == null)
+            {
+                CartList = dbContext.TempCarts.Join(
+                    dbContext.Products,
+                    Cart => Cart.ProductId,
+                    Product => Product.Id,
+                    (Cart, Product) => new CartItems
+                    {
+                        ProductName = Product.ProductName,
+                        ProductImg = Product.ImageSrc,
+                        Quantity = Cart.Quantity,
+                        Price = Product.Price,
+                        User = Cart.TempSessionId.ToString(),
+                        CartID = Cart.Id.ToString()
+                    }
+                    ).Where(x =>
+                        x.User.Equals(userid)
+                    ).ToList();
+            }
+            else
+            {
+                CartList = dbContext.Carts.Join(
+                    dbContext.Products,
+                    Cart => Cart.ProductId,
+                    Product => Product.Id,
+                    (Cart, Product) => new CartItems
+                    {
+                        ProductName = Product.ProductName,
+                        ProductImg = Product.ImageSrc,
+                        Quantity = Cart.Quantity,
+                        Price = Product.Price,
+                        User = Cart.UserId.ToString(),
+                        CartID = Cart.Id.ToString()
+                    }
+                    ).Where(x =>
+                        x.User.Equals(userid)
+                    ).ToList();
+            }
+            return CartList;
+        }
+
+        [Route("addtocart/{id}")]
+        public IActionResult AddToCart(string id)
+        {
+            string userid = GetUserOrSession();
+            if (Request.Cookies["SessionId"] == null)
+            {
+                TempCart cart = dbContext.TempCarts.FirstOrDefault(x => x.TempSessionId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
+
+                if (cart == null)
+                {
+                    dbContext.TempCarts.Add(new TempCart
+                    {
+                        TempSessionId = Guid.Parse(userid),
+                        ProductId = Guid.Parse(id),
+                        Quantity = 1
+                    }
+                    );
+                }
+                else
+                {
+                    cart.Quantity++;
+                }
+            }
+            else
+            {
+                Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
+
+                if (cart == null)
+                {
+                    dbContext.Carts.Add(new Cart
+                    {
+                        UserId = Guid.Parse(userid),
+                        ProductId = Guid.Parse(id),
+                        Quantity = 1
+                    }
+                    );
+                }
+                else
+                {
+                    cart.Quantity++;
+                }
+            }
+            dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         [Route("removefromcart/{id}")]
         public IActionResult RemoveFromCart(string id)
@@ -106,11 +219,18 @@ namespace ShoppingCart_Team7.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            Cart cart = dbContext.Carts.FirstOrDefault(x => x.Id == Guid.Parse(id));
-
-            dbContext.Carts.Remove(cart);
-
+            string SessionID = Request.Cookies["SessionId"];
+            if (SessionID == null)
+            {
+                
+                TempCart cart = dbContext.TempCarts.FirstOrDefault(x => x.Id == Guid.Parse(id));
+                dbContext.Remove(cart);
+            }
+            else 
+            {
+                Cart cart = dbContext.Carts.FirstOrDefault(x => x.Id == Guid.Parse(id));
+                dbContext.Remove(cart);
+            }
             dbContext.SaveChanges();
 
             return RedirectToAction("Index");
@@ -124,15 +244,20 @@ namespace ShoppingCart_Team7.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            Cart cart = dbContext.Carts.FirstOrDefault(x => x.Id == Guid.Parse(id));
-
-            cart.Quantity = quantity;
-
+            if (Request.Cookies["SessionId"] == null)
+            {
+                TempCart cart = dbContext.TempCarts.FirstOrDefault(x => x.Id == Guid.Parse(id));
+                cart.Quantity = quantity;
+            }
+            else
+            {
+                Cart cart = dbContext.Carts.FirstOrDefault(x => x.Id == Guid.Parse(id));
+                cart.Quantity = quantity;
+            }         
             dbContext.SaveChanges();
             return RedirectToAction("Index");
 
-        }
+        }    
 
         public string IssueTempSession()
         {
@@ -143,7 +268,7 @@ namespace ShoppingCart_Team7.Controllers
 
         public string GetUserOrSession()
         {
-            string user = Request.Cookies["SessionID"];
+            string user = Request.Cookies["SessionId"];
             if (user == null)
             {
                 user = Request.Cookies["tempSession"];
@@ -164,78 +289,7 @@ namespace ShoppingCart_Team7.Controllers
         public void IssueTest()
         {
             string SessionID = "820B2B6A-2286-48B6-BB91-08D98F8B36C7";
-            Response.Cookies.Append("SessionID", SessionID);
-        }
-
-        public IActionResult GetTempCart()
-        {
-
-        }
-
-        public IActionResult Index()
-        {
-            string userid = GetUserOrSession();
-            List<CartItems> anotherCartList = new List<CartItems>();
-            anotherCartList = dbContext.TempCarts.Join(
-                dbContext.Products,
-                Cart => Cart.ProductId,
-                Product => Product.Id,
-                (Cart, Product) => new CartItems
-                {
-                    ProductName = Product.ProductName,
-                    ProductImg = Product.ImageSrc,
-                    Quantity = Cart.Quantity,
-                    Price = Product.Price,
-                    User = Cart.TempSessionId.ToString(),
-                    CartID = Cart.Id.ToString()
-                }
-                ).Where(x =>
-                    x.User.Equals(userid)
-                ).ToList();
-
-            // compute price of every item in cart
-            var iter =
-                from cart in anotherCartList
-                select new { itemsPrice = cart.Price * cart.Quantity };
-
-            //compute total price in cart
-            var totalPrice = 0f;
-            foreach (var cart in iter)
-            {
-                totalPrice += cart.itemsPrice;
-            }
-
-            ViewData["totalprice"] = totalPrice;
-            ViewData["whatisthis"] = anotherCartList;
-
-            return View();
-        }
-
-        [Route("addtocart/{id}")]
-        public IActionResult AddToCart(string id)
-        {
-            string userid = GetUserOrSession();
-            TempCart cart = dbContext.TempCarts.FirstOrDefault(x => x.TempSessionId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
-
-            if (cart == null)
-            {
-                dbContext.TempCarts.Add(new TempCart
-                {
-                    TempSessionId = Guid.Parse(userid),
-                    ProductId = Guid.Parse(id),
-                    Quantity = 1
-                }
-                );
-
-                dbContext.SaveChanges();
-            }
-            else
-            {
-                cart.Quantity++;
-
-                dbContext.SaveChanges();
-            }
-            return RedirectToAction("Index");
+            Response.Cookies.Append("SessionId", SessionID);
         }
     }
 }
