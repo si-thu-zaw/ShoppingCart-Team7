@@ -285,6 +285,25 @@ namespace ShoppingCart_Team7.Controllers
             return user;
         }
 
+        public void CartLogin()
+        {
+            string userid = GetUserOrSession();
+            string tempsession = Request.Cookies["tempSession"];           
+            List<TempCart> tempCarts = dbContext.TempCarts.Where(x => x.TempSessionId == Guid.Parse(tempsession)).ToList();
+            foreach (TempCart item in tempCarts)
+            {
+                dbContext.Add(new Cart
+                {
+                    UserId = Guid.Parse(userid),
+                    Quantity = item.Quantity,
+                    ProductId = item.ProductId
+                });
+                dbContext.Remove(item);
+            }           
+            dbContext.SaveChanges();
+
+        }
+
         [Route("issuetemp")]
         public void IssueTest()
         {
