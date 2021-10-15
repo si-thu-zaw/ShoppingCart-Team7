@@ -57,6 +57,8 @@ namespace ShoppingCart_Team7
 
             app.UseAuthorization();
 
+           
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
