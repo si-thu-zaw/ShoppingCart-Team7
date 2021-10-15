@@ -20,8 +20,12 @@ namespace ShoppingCart_Team7.Controllers
 
         public IActionResult Index(int id)
         {
-            string username = "charles";
+            string username = Request.Cookies["Username"];
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
+            if (Buyer==null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
             List<Purchase> purchases = dbContext.Purchases.Where(x => x.UserId == Buyer.Id).ToList();
             List<Product> products = dbContext.Products.ToList();
             List<Purchase> sortPurchases = Sort(purchases, products, id);
