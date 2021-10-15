@@ -23,7 +23,7 @@
                                     <h6 class="card-title">@bs.ProductName</h6>
                                 </div>
                             </a>
-                            <button type="button" class="btn-dark btn-block home-buy-button">$@bs.Price Add to Cart</button>
+                            <a href="~/addtocart/@bs.Id"><button type="button" class="btn-dark btn-block home-buy-button">$@bs.Price Add to Cart</button></a>
                         </div>
                     </div>
                 }
@@ -45,7 +45,7 @@
                                     <h6 class="card-title">@ts.ProductName</h6>
                                 </div>
                             </a>
-                            <button type="button" class="btn-dark btn-block home-buy-button">$@ts.Price Add to Cart</button>
+                            <a href="~/addtocart/@ts.Id"><button type="button" class="btn-dark btn-block home-buy-button">$@ts.Price Add to Cart</button></a>
                         </div>
                     </div>
                 }
