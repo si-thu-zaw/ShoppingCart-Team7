@@ -189,7 +189,7 @@ namespace ShoppingCart_Team7.Controllers
         {
             string userid = GetUserOrSession();
             string tempsession = Request.Cookies["tempSession"];
-            List<TempCart> tempCarts = dbContext.TempCarts.Where(x => x.TempSessionId == Guid.Parse(tempsession)).ToList();
+            List<TempCart> tempCarts = dbContext.TempCarts.Where(x => x.TempSessionId.ToString() == tempsession).ToList();
             foreach (TempCart item in tempCarts)
             {
                 dbContext.Add(new Cart
