@@ -1,5 +1,6 @@
 ﻿@{
     float totalPrice = (float)ViewData["totalprice"];
+    ViewData["Title"] = "Cart";
 }
 
 
@@ -12,7 +13,7 @@
     <a class="nav-link text-dark" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
 </div>
 <div style="float:left">
-    <a class="nav-link text-dark" asp-area="" asp-controller="MyPurchase" asp-action="Index">Check out</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Checkout">Check Out</a>
 </div>
 <div style="float:right">
     <a>Total:$ @totalPrice</a>
