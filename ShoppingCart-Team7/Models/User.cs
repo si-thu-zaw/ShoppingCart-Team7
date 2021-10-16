@@ -21,10 +21,6 @@ namespace ShoppingCart_Team7.Models
 
         // maps to remaining columns in User
         [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
         public string UserName { get; set; }
         [Required]
         public byte[] PasswordHash { get; set; }
