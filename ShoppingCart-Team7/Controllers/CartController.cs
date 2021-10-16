@@ -20,6 +20,8 @@ namespace ShoppingCart_Team7.Controllers
         //Gets the list of Cart items, calculates the prices to be shown upon load 
         public IActionResult Index()
         {
+
+
             List<CartItems> CartList = new List<CartItems>();
             CartList = GetCart();
                 
@@ -183,7 +185,7 @@ namespace ShoppingCart_Team7.Controllers
         }
 
         //Called on login, moves all items from the temporary cart to the logged in user's cart
-        public void CartLogin()
+        public IActionResult CartLogin()
         {
             string userid = GetUserOrSession();
             string tempsession = Request.Cookies["tempSession"];
@@ -199,6 +201,10 @@ namespace ShoppingCart_Team7.Controllers
                 dbContext.Remove(item);
             }
             dbContext.SaveChanges();
+
+            Response.Cookies.Delete("tempSession");
+
+            return RedirectToAction("Index", "Home");
         }
 
         //Returns the logged in user's userid, the temporary session id or issues a new temporary session id if none exists
@@ -228,7 +234,35 @@ namespace ShoppingCart_Team7.Controllers
             Response.Cookies.Append("tempSession", tempCookie);
             return tempCookie;
         }
+        public IActionResult Checkout()
+        {
+            if (Request.Cookies["SessionId"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
+            string userid = GetUserOrSession();
+            List<Cart> cart = dbContext.Carts.Where(x => x.UserId == Guid.Parse(userid)).ToList();
+            DateTime currentDate = DateTime.Now;
+            foreach (Cart item in cart)
+            {
+
+                for (int i = 0; i < item.Quantity; i++)
+                {
+                    dbContext.Add(new Purchase
+                    {
+                        UserId = Guid.Parse(userid),
+                        ProductId = item.ProductId,
+                        PurchaseDate = currentDate,
+                        ActivationCode = Guid.NewGuid()
+                    }); ;
+
+                }
+                dbContext.Remove(item);
+            }
+            dbContext.SaveChanges();
+            return RedirectToAction("Index", "MyPurchase");
+        }
 
         /* public IActionResult Index()
         {
@@ -255,6 +289,7 @@ namespace ShoppingCart_Team7.Controllers
             var iter =
                 from cart in anotherCartList
                 select new { itemsPrice = cart.Price*cart.Quantity};
+
 
             //compute total price in cart
             var totalPrice = 0f;
@@ -298,16 +333,6 @@ namespace ShoppingCart_Team7.Controllers
 
                 dbContext.SaveChanges();
             }    
-            //List<Item> cart = (List<Item>)
-            //List<string> addCartItem = new List<string>;
-
-            //var addCartItem = dbContext.Carts.FirstOrDefault(
-            //    cart => cart.Id == ShoppingId);
-
-            //addCartItem = new addToCart
-            //{
-            //    CartID = sh
-            //};
 
             return RedirectToAction("Index");
         } 
@@ -315,8 +340,10 @@ namespace ShoppingCart_Team7.Controllers
         [Route("issuetemp")]
         public void IssueTest()
         {
+
             string SessionID = "820B2B6A-2286-48B6-BB91-08D98F8B36C7";
             Response.Cookies.Append("SessionId", SessionID);
         } */
+
     }
 }

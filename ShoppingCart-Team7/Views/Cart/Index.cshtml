@@ -1,27 +1,37 @@
 ﻿@{
     float totalPrice = (float)ViewData["totalprice"];
+    ViewData["Title"] = "Cart";
 }
 
 
 
 <div style="float:left">
+
     <h4>View Cart</h4>
 </div>
 <div style="float:left">
     <a class="nav-link text-dark" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
 </div>
 <div style="float:left">
-    <a class="nav-link text-dark" asp-area="" asp-controller="MyPurchase" asp-action="Index">Check out</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Checkout">Check Out</a>
 </div>
 <div style="float:right">
     <a>Total:$ @totalPrice</a>
 </div>
+
 <table width="80%">
+    <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
     @{
+
         //var cartlist = (new {string ProductName, int Quantity, float Price, string })
         List<CartItems> CartList = (List<CartItems>)ViewData["CartList"];
         foreach (dynamic item in CartList)
         {
+
             <tr>
                 <td><img src=@item.ProductImg style="float:left" width="5%" height="5%">@item.ProductName</td>
                 <td width="10%">$@item.Price</td>
@@ -29,10 +39,8 @@
                 <td></td>
                 <td><a href="~/removefromcart/@item.CartID">Delete</a></td>
             </tr>
+
         }
 
     }
 </table>
-
-
-

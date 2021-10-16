@@ -1,14 +1,23 @@
 ﻿@{
     List<Product> ProductList = (List<Product>)ViewData["productlist"];
     string searchstring = (string)ViewData["searchstring"];
+    ViewData["Title"] = "Product Gallery";
 }
 
-<h2>Products</h2>
+<h1>Products</h1>
 
 <div class="">
     <div class="form-group">
         <form action="/Gallery/" method="POST">
-            <input class="form-text; searchbar" type="text" name="searchstring" placeholder="Search" value="@searchstring" />
+            <div class="input-group rounded">
+                <input type="search" name="searchstring" value="@searchstring" class="form-control rounded" placeholder="Search" aria-label="Search"
+                       aria-describedby="search-addon" />
+                <button type="submit">
+                        <span class="input-group-text border-0" id="search-addon">
+                    <i class="fas fa-search"></i>
+                </span>
+                </button>
+            </div>
         </form>
     </div>
     <div class="row">
