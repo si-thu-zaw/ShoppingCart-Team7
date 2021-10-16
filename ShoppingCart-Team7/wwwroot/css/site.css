@@ -125,6 +125,12 @@ body {
     color: black;
 }
 
+.gallery-card a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+
 /* Home Styles*/
 .bestsellers, .toprated, .prod-det-rec {
     background-color: #F4F4F4;

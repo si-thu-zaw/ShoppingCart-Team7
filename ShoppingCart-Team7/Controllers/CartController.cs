@@ -185,7 +185,7 @@ namespace ShoppingCart_Team7.Controllers
         }
 
         //Called on login, moves all items from the temporary cart to the logged in user's cart
-        public void CartLogin()
+        public IActionResult CartLogin()
         {
             string userid = GetUserOrSession();
             string tempsession = Request.Cookies["tempSession"];
@@ -201,6 +201,10 @@ namespace ShoppingCart_Team7.Controllers
                 dbContext.Remove(item);
             }
             dbContext.SaveChanges();
+
+            Response.Cookies.Delete("tempSession");
+
+            return RedirectToAction("Index", "Home");
         }
 
         //Returns the logged in user's userid, the temporary session id or issues a new temporary session id if none exists
