@@ -24,73 +24,77 @@
         }
 
         .detailbox {
-            margin-top: 70px;
+            margin-top: 50px;
             margin-bottom: 50px;
             width: 65%;
-            margin-left: 600px;
+            margin-left: 500px;
         }
 
         .detailimg {
             border: 20px solid #ffffff;
             float: left;
-            width: 500px;
-            height: 700px;
+            width: 400px;
+            height: 570px;
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         }
 
         .productCatagory {
             color: #808080;
-            font-size: 30px;
+            font-size: 25px;
             font-weight: bold;
         }
 
         .productnametext {
             text-align: left;
             color: #363636;
-            font-size: 60px;
+            font-size: 50px;
             font-weight: 900;
         }
 
         .rating {
             margin-top:20px;
             margin-bottom:20px;
-            font-size: 30px;
+            font-size: 20px;
         }
 
         .review_nav {
             color: #808080;
-            font-size: 20px;
+            font-size: 15px;
         }
 
         .pricetext {
             text-align: left;
             color: #CD5C5C;
-            font-size: 40px;
+            font-size: 35px;
             font-weight: bold;
             margin-top: 100px;
         }
 
         .description {
             color: #808080;
-            font-size: 22px;
+            font-size: 16px;
         }
 
         .detail-buy-button {
             background-color: darkcyan;
             width: auto;
             color: #ffffff;
-            font-size: 40px;
+            font-size: 30px;
             font-weight: 700;
-            padding-left: 40px;
-            padding-right: 40px;
+            padding-left: 30px;
+            padding-right: 30px;
             margin-top: 20px;
         }
 
+        .recommendation{
+            margin-top:30px;
+        }
+
         .rectext {
-            margin-top: 25px;
+            margin-top: 22px;
             margin-bottom: 20px;
             color: #808080;
-            font-size: 35px;
+            font-size: 25px;
         }
 
         .checked {
@@ -102,18 +106,24 @@
             margin-bottom:20px;
         }
 
+        .reviewHead{
+            background-color:#eaeaea;
+        }
+
         .reviewName{
             color:darkcyan;
-            font-size:25px;
+            font-size:22px;
             font-weight:700;
         }
 
+
         .reviewDate {
-            font-size:20px;
+            font-size:16px;
         }
 
         .reviewComment{
-            font-size:20px;
+            font-size:18px;
+            margin-bottom:30px;
         }
 
         .reviewRating {
@@ -187,7 +197,7 @@
             @{
                 for (int i = 0; i < aReviewList.Count; i++)
                 {
-                    <p><span class="reviewName">@userNameList[i]</span>   <span class="">   Reviewed on @aReviewList[i].ReviewDate.Day / @aReviewList[i].ReviewDate.Month / @aReviewList[i].ReviewDate.Year</span><br /></p>
+                    <p class="reviewHead"><span class="reviewName">@userNameList[i]&nbsp;&nbsp;&nbsp;&nbsp</span><span class="reviewDate">Reviewed on @aReviewList[i].ReviewDate.Day / @aReviewList[i].ReviewDate.Month / @aReviewList[i].ReviewDate.Year</span><br /></p>
                     <div class="reviewRating">
                         <p>
                             @{
