@@ -170,7 +170,7 @@ body {
     bottom: 10px;
 }
 
-.home-card a {
+.home-card a:hover, a:link, a:visited {
     text-decoration: none;
     color: black;
 }
