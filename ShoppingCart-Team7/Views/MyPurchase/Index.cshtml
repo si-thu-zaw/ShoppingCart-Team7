@@ -67,7 +67,7 @@
             {
                 string[] productInfos = c.PID_PDATE.Split(',');
                 string productInfo = productInfos[0].Substring(14, 36);
-                string purchaseDate = productInfos[1].Substring(16, 21).TrimEnd('}');
+                string purchaseDate = c.Date.ToString("dddd, dd MMMM yyyy hh:mm tt");
                 List<Guid> ActivationCodes = c.ActivationCodes;
 
                 Product pdt = products.FirstOrDefault(x => x.Id.ToString() == productInfo);
