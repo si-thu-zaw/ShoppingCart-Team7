@@ -85,16 +85,6 @@ namespace ShoppingCart_Team7.Controllers
 
                 dbContext.SaveChanges();
             }    
-            //List<Item> cart = (List<Item>)
-            //List<string> addCartItem = new List<string>;
-
-            //var addCartItem = dbContext.Carts.FirstOrDefault(
-            //    cart => cart.Id == ShoppingId);
-
-            //addCartItem = new addToCart
-            //{
-            //    CartID = sh
-            //};
 
             return RedirectToAction("Index");
         }
@@ -134,10 +124,10 @@ namespace ShoppingCart_Team7.Controllers
 
         }
 
-        [Route("checkout/{id}")]
-        public IActionResult Checkout(string id)
-        {
-            List<Cart>cart=dbContext.Carts.Where(x =>x.)
-        }
+        //[Route("checkout/{id}")]
+        //public IActionResult Checkout(string id)
+        //{
+        //    List<Cart>cart=dbContext.Carts.Where(x =>x.)
+        //}
     }
 }
