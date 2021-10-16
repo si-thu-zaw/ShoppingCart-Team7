@@ -56,8 +56,8 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
-                                                }).OrderByDescending(x=>x.Date).ToList();
+                                                  Date = grp.Key.PurchaseDate
+                                              }).OrderByDescending(x=>x.Date).ToList();
             }
             else if (id == 5)
             {
@@ -68,7 +68,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
+                                                  Date = grp.Key.PurchaseDate
                                               }).OrderBy(x=>x.Date).ToList();
             }
             else
@@ -80,7 +80,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
+                                                  Date = grp.Key.PurchaseDate
                                               }).ToList();
             }
 
@@ -150,7 +150,7 @@ namespace ShoppingCart_Team7.Controllers
                 }
                 return purchaseList;
             }
-            if (id == 6)
+            if (id == 7)
             {
                 var purchases =
                 from pur in p

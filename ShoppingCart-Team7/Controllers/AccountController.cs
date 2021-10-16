@@ -52,8 +52,8 @@ namespace ShoppingCart_Team7.Controllers
 
             Response.Cookies.Append("SessionId", session.Id.ToString());
             Response.Cookies.Append("Username", user.UserName);
-            
-            return RedirectToAction("Index", "Home");
+          
+            return RedirectToAction("CartLogin", "Cart");
         }
 
         public IActionResult Logout()
@@ -61,6 +61,7 @@ namespace ShoppingCart_Team7.Controllers
 
             Response.Cookies.Delete("SessionId");
             Response.Cookies.Delete("Username");
+            Response.Cookies.Delete("tempSession");
 
             return RedirectToAction("Index", "Home");
         }
