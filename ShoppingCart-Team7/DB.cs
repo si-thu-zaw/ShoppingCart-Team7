@@ -36,12 +36,8 @@ namespace ShoppingCart_Team7
             HashAlgorithm sha = SHA256.Create();
 
             string[] usernames = { "charles", "jack", "jamie", "ann", "mark", "kevin", "denise", "eliza", "peter", "jane" };
-            string[] firstName = { "Charles", "Jack", "Jamie", "Ann", "Mark", "Kevin", "Denise", "Eliza", "Peter", "Jane" };
-            string[] lastName = { "Tan", "Lee", "Russell", "Lee", "Ng", "Leong", "Peeters", "Robins", "Ng", "Potter" };
-
 
             // password is same as username
-            int counter = 0;
             foreach (string user in usernames)
             {
                 string combination = user + user;
@@ -49,13 +45,9 @@ namespace ShoppingCart_Team7
 
                 dbContext.Add(new User
                 {
-                    FirstName = firstName[counter],
-                    LastName = lastName[counter],
                     UserName = user,
                     PasswordHash = hash
                 });
-
-                counter++;
             }
 
             dbContext.SaveChanges();
