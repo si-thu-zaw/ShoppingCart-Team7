@@ -5,7 +5,8 @@
 
 
 <div style="float:left">
-    <h4>Your Cart</h4>
+
+    <h4>View Cart</h4>
 </div>
 <div style="float:left">
     <a class="nav-link text-dark" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
@@ -24,10 +25,11 @@
         <th>Quantity</th>
     </tr>
     @{
-        List<CartItems> CartList = (List<CartItems>)ViewData["whatisthis"];
+
+        //var cartlist = (new {string ProductName, int Quantity, float Price, string })
+        List<CartItems> CartList = (List<CartItems>)ViewData["CartList"];
         foreach (dynamic item in CartList)
         {
-            
 
             <tr>
                 <td><img src=@item.ProductImg style="float:left" width="5%" height="5%">@item.ProductName</td>
@@ -36,9 +38,6 @@
                 <td></td>
                 <td><a href="~/removefromcart/@item.CartID">Delete</a></td>
             </tr>
-
-            <br />
-
 
         }
 
