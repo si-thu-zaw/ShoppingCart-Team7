@@ -20,6 +20,8 @@ namespace ShoppingCart_Team7.Controllers
         //Gets the list of Cart items, calculates the prices to be shown upon load 
         public IActionResult Index()
         {
+
+
             List<CartItems> CartList = new List<CartItems>();
             CartList = GetCart();
                 
@@ -256,6 +258,7 @@ namespace ShoppingCart_Team7.Controllers
                 from cart in anotherCartList
                 select new { itemsPrice = cart.Price*cart.Quantity};
 
+
             //compute total price in cart
             var totalPrice = 0f;
             foreach(var cart in iter)
@@ -298,16 +301,6 @@ namespace ShoppingCart_Team7.Controllers
 
                 dbContext.SaveChanges();
             }    
-            //List<Item> cart = (List<Item>)
-            //List<string> addCartItem = new List<string>;
-
-            //var addCartItem = dbContext.Carts.FirstOrDefault(
-            //    cart => cart.Id == ShoppingId);
-
-            //addCartItem = new addToCart
-            //{
-            //    CartID = sh
-            //};
 
             return RedirectToAction("Index");
         } 
@@ -315,8 +308,10 @@ namespace ShoppingCart_Team7.Controllers
         [Route("issuetemp")]
         public void IssueTest()
         {
+
             string SessionID = "820B2B6A-2286-48B6-BB91-08D98F8B36C7";
             Response.Cookies.Append("SessionId", SessionID);
         } */
+
     }
 }
