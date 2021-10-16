@@ -1,5 +1,6 @@
 ﻿@{ ViewData["Title"] = "My Purchases";
 
+
     List<Purchase> purchases = (List<Purchase>)ViewData["purchases"];
     List<Product> products = (List<Product>)ViewData["products"];
     List<PurchaseCodes> codes = (List<PurchaseCodes>)ViewData["codes"];
@@ -8,10 +9,15 @@
 
     string searchStr = (string)ViewData["searchStr"];
 
-    List<Purchase> UserPurchases = new List<Purchase>();
+    List<Review> PurRev = new List<Review>();
+    List<Purchase> NoRev = new List<Purchase>();
 
-}
+    
+    List<Purchase> UserPurchases = new List<Purchase>(); }
 <!-- Header and Search -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <div>
     <div class="mb-3">
         <h2>My Purchases</h2>
@@ -55,14 +61,53 @@
     </li>
 </ul>
 
+@if (TempData["SuccessMessage"] != null)
+ {
+    <div id="successDiv" class="alert alert-success alert-dismissable">
+         <strong>@TempData["SuccessMessage"]</strong>
+    </div>
+    <script>
+        setTimeout(function () {
+            $('#successDiv').fadeOut('fast');
+        }, 3000); // <-- time in milliseconds
+    </script>
+    TempData.Remove("SuccessMessage");
+
+}
+
 <div class="my-5" id="page">
-    @{
-        if (codes.Count() == 0)
-        {
-            <h4>No result found</h4>
-        }
-        else
-        {
+    @{ if (codes.Count() == 0)
+                    {
+        <h4>No result found</h4> }
+                    else
+                    {
+                        foreach (Purchase p in purchases)
+                        {
+                            //purchases that already reviewed
+                            var pppp =
+                            from rev in reviews
+                            where rev.Purchases.Id == p.Id
+                            select rev;
+
+                            foreach (Review rr in pppp)
+                            {
+                                PurRev.Add(rr);
+                            }
+
+                        }
+             
+
+                        var result = purchases.Where(p => reviews.All(p2 => p2.Purchases.Id != p.Id));
+
+                        foreach (Purchase rr in result)
+                        {
+                            NoRev.Add(rr);
+                            
+                        }
+
+
+                        // }
+
             foreach (PurchaseCodes c in codes)
             {
                 string[] productInfos = c.PID_PDATE.Split(',');
@@ -162,6 +207,9 @@
 </div>
 
 
+                                    } }
+</div>
+
 
 
 
@@ -195,7 +243,84 @@
     </div>
 </div>
 
+<div class="modal fade" id="AddReviewModal" tabindex="-1" role="dialog" aria-labelledby="AddReviewModal"
+  aria-hidden="true">
+<form id="form" action="/MyPurchase/AddReview"  class="rating" method="POST">
 
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Your Review</h4>
+      
+      </div>
+      <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+              <i class="fas fa-star prefix grey-text"></i>
+             
+
+              <fieldset class="rating">
+
+
+                  <input id="demo-1" type="radio" name="rr" value="1">
+                  <label for="demo-1">1 star</label>
+                  <input id="demo-2" type="radio" name="rr" value="2">
+                  <label for="demo-2">2 stars</label>
+                  <input id="demo-3" type="radio" name="rr" value="3">
+                  <label for="demo-3">3 stars</label>
+                  <input id="demo-4" type="radio" name="rr" value="4">
+                  <label for="demo-4">4 stars</label>
+                  <input id="demo-5" type="radio" name="rr" value="5">
+                  <label for="demo-5">5 stars</label>
+
+                  <div class="stars">
+                      <label for="demo-1" aria-label="1 star" title="1 star"></label>
+                      <label for="demo-2" aria-label="2 stars" title="2 stars"></label>
+                      <label for="demo-3" aria-label="3 stars" title="3 stars"></label>
+                      <label for="demo-4" aria-label="4 stars" title="4 stars"></label>
+                      <label for="demo-5" aria-label="5 stars" title="5 stars"></label>
+                  </div>
+
+              </fieldset>
+
+              <label data-error="wrong" data-success="right" for="rr">Rating (1-5)</label>
+             
+
+
+
+          </div>
+
+
+          <div class="md-form mb-5">
+              <i class="fas fa-comments prefix grey-text"></i>
+              <input type="text" id="comment" name="comment" class="form-control validate">
+              <label data-error="wrong" data-success="right" for="comment">Comments</label>
+          </div>
+
+          <input type="hidden" id="purchaseid" name="purchaseid" class="form-control">
+          <input type="hidden" id="productid" name="productid" class="form-control">
+          <input type="hidden" id="rating" name="rating" class="form-control">
+
+      </div>
+
+                <script>
+
+                  $(':radio').change(function () {
+                      console.log('New star rating: ' + this.value);
+                      $('#rating').val(this.value);
+                  });
+              </script>
+
+         <!-- Modal footer -->
+            <div class="modal-footer">
+                 <button type="submit"  class="btn btn-success shadow-sm mx-2">ADD</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="myFunction2()">Close</button>
+            </div>
+
+    </div>
+  </div>
+
+</form>
+</div>
 <script>
 
     var elem = document.getElementById("myElem");
@@ -214,6 +339,12 @@
             inner.innerHTML = "Downloading.....";
             inner2.innerHTML = ""
         }, 500);
+    }
+
+    function addReviewFunction(productid,purchaseid) {
+        
+        $('#productid').val(productid);
+        $('#purchaseid').val(purchaseid);
     }
 
 </script>
