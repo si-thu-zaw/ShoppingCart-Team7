@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Product Detail";
+    //ViewData["Title"] = "Product Detail";
 }
 
 @{
@@ -10,6 +10,7 @@
 
     List<Review> aReviewList = (List<Review>)ViewData["aReviewList"];
     List<string> userNameList = (List<string>)ViewData["userNameList"];
+    ViewData["Title"] = product.ProductName;
 }
 
 <head>
@@ -132,6 +133,7 @@
 
         a:hover, a:link {
             text-decoration: none;
+            color: black;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

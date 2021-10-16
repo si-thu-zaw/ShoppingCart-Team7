@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart_Team7.Models;
 using Microsoft.AspNetCore.Mvc;
+using AspNetCoreHero.ToastNotification;
 
 namespace ShoppingCart_Team7
 {
@@ -27,6 +28,8 @@ namespace ShoppingCart_Team7
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
             // add database context into DI container
             services.AddDbContext<DBContext>(opt =>

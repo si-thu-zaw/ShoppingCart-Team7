@@ -7,19 +7,32 @@ using System.Threading.Tasks;
 using ShoppingCart_Team7.Models;
 using System.Dynamic;
 
+using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
+using System.Text;
+
+
+using Microsoft.Data.SqlClient;
+using AspNetCoreHero.ToastNotification.Abstractions;
+
 namespace ShoppingCart_Team7.Controllers
 {
     public class MyPurchaseController : Controller
     {
         private DBContext dbContext; // dont forget to create ref
-
-        public MyPurchaseController(DBContext dbContext) // dont forget to instantiate
+        private readonly INotyfService _notyf;
+        public MyPurchaseController(DBContext dbContext, INotyfService notyf) // dont forget to instantiate
         {
             this.dbContext = dbContext;
+            _notyf = notyf;
         }
 
         public IActionResult Index(int id)
         {
+
+            
+            _notyf.Success("Success Notification");
+
             string username = Request.Cookies["Username"];
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
             if (Buyer==null)
@@ -30,6 +43,7 @@ namespace ShoppingCart_Team7.Controllers
             List<Product> products = dbContext.Products.ToList();
             List<Purchase> sortPurchases = Sort(purchases, products, id);
             List<Review> reviews = dbContext.Reviews.ToList();
+           // List<Review> reviews = dbContext.Reviews.Where(x => x.Purchases.Id == purchases.Id).ToList();
 
             List<PurchaseCodes> codes = new List<PurchaseCodes>();
 
@@ -42,8 +56,8 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
-                                                }).OrderByDescending(x=>x.Date).ToList();
+                                                  Date = grp.Key.PurchaseDate
+                                              }).OrderByDescending(x=>x.Date).ToList();
             }
             else if (id == 5)
             {
@@ -54,7 +68,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
+                                                  Date = grp.Key.PurchaseDate
                                               }).OrderBy(x=>x.Date).ToList();
             }
             else
@@ -66,7 +80,7 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = DateTime.Parse(grp.Key.ToString().Substring(67, 17).Trim('}'))
+                                                  Date = grp.Key.PurchaseDate
                                               }).ToList();
             }
 
@@ -156,6 +170,57 @@ namespace ShoppingCart_Team7.Controllers
 
             return p;
 
+        }
+
+        public IActionResult AddReview(IFormCollection form)
+        {
+            string rating = form["rating"];
+            string rdatetime = form["reviewdatetime"];
+            string comment = form["comment"];
+
+            string proid = form["productid"];
+            string purid = form["purchaseid"];
+
+        
+
+            DateTime reviewdatetime = DateTime.Now;
+            Guid productid = Guid.Parse(proid);
+            Guid purchaseid = Guid.Parse(purid);
+
+            Guid Id = Guid.NewGuid();
+
+            string connectionString = "Server=localhost; Database=ShoppingCartDB; User ID=sa; Password=bigStrongPwd10;";
+
+            string query = "INSERT INTO Reviews (Id,Comments,Rating,ReviewDate,PurchasesId,ProductId) VALUES(@Id,@comment,@rating,@reviewdatetime,@purchaseid,@productid)";
+
+            SqlConnection connection = new SqlConnection(@connectionString);
+            
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@Id",Id);
+            command.Parameters.AddWithValue("@comment", comment);
+            command.Parameters.AddWithValue("@rating", rating);
+            command.Parameters.AddWithValue("@reviewdatetime", reviewdatetime);
+            command.Parameters.AddWithValue("@purchaseid", purchaseid);
+            command.Parameters.AddWithValue("@productid", productid);
+
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine("Error Generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            TempData["SuccessMessage"] = "Your Review Added! Thank you.";
+            return RedirectToAction("Index", "MyPurchase");
         }
 
         public IActionResult Search(string searchStr, int id)

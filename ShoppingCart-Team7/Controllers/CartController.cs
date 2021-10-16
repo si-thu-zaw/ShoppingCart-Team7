@@ -189,7 +189,7 @@ namespace ShoppingCart_Team7.Controllers
         {
             string userid = GetUserOrSession();
             string tempsession = Request.Cookies["tempSession"];
-            List<TempCart> tempCarts = dbContext.TempCarts.Where(x => x.TempSessionId == Guid.Parse(tempsession)).ToList();
+            List<TempCart> tempCarts = dbContext.TempCarts.Where(x => x.TempSessionId.ToString() == tempsession).ToList();
             foreach (TempCart item in tempCarts)
             {
                 dbContext.Add(new Cart
@@ -234,7 +234,35 @@ namespace ShoppingCart_Team7.Controllers
             Response.Cookies.Append("tempSession", tempCookie);
             return tempCookie;
         }
+        public IActionResult Checkout()
+        {
+            if (Request.Cookies["SessionId"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
+            string userid = GetUserOrSession();
+            List<Cart> cart = dbContext.Carts.Where(x => x.UserId == Guid.Parse(userid)).ToList();
+            DateTime currentDate = DateTime.Now;
+            foreach (Cart item in cart)
+            {
+
+                for (int i = 0; i < item.Quantity; i++)
+                {
+                    dbContext.Add(new Purchase
+                    {
+                        UserId = Guid.Parse(userid),
+                        ProductId = item.ProductId,
+                        PurchaseDate = currentDate,
+                        ActivationCode = Guid.NewGuid()
+                    }); ;
+
+                }
+                dbContext.Remove(item);
+            }
+            dbContext.SaveChanges();
+            return RedirectToAction("Index", "MyPurchase");
+        }
 
         /* public IActionResult Index()
         {

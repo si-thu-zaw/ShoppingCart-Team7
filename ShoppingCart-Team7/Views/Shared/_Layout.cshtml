@@ -41,8 +41,8 @@
                         </li>
 
                         @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Index">Login</a>
-        </li>*@
+                                <a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Index">Login</a>
+                            </li>*@
                         @if (Context.Request.Cookies["SessionId"] != null)
                         {
                             <li class="nav-item">
@@ -69,10 +69,10 @@
                             </li>
                         }
                         @*<li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action(" Index", "Home" , new { area="" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>*@
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action(" Index", "Home" , new { area="" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </li>*@
                     </ul>
                 </div>
             </div>
@@ -92,6 +92,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
