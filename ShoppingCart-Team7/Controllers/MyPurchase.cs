@@ -136,7 +136,7 @@ namespace ShoppingCart_Team7.Controllers
                 }
                 return purchaseList;
             }
-            if (id == 6)
+            if (id == 7)
             {
                 var purchases =
                 from pur in p
