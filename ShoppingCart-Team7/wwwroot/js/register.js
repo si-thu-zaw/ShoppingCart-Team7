@@ -16,16 +16,21 @@ function UsernameCheck(event) {
     let msgchk = document.getElementById("usernamechk");
     
     if (username_elem) {
-        username = username_elem.value.trim();
-        msgchk.innerHTML = "";
+        username = username_elem.value.trim();   
     }
 
     if (username.length === 0) {
         msgchk.innerHTML = "Username cannot be empty";
-    }   
-    if(username.length < 6 && username.length > 0) {
-        msgchk.innerHTML = "At least 6 characters";
+        return;
+    } else if (username.length < 4 && username.length > 0) {
+        msgchk.innerHTML = "At least 4 characters";
+        return;
+    } else {
+        ChkUserNameUnique(username_elem.value, msgchk);
+        return;
     }
+    
+    msgchk.innerHTML = "";
 }
 
 function PasswordCheck(event) {
@@ -37,15 +42,18 @@ function PasswordCheck(event) {
 
     if (password_elem) {
         password = password_elem.value.trim();
-        msgchk.innerHTML = "";
     }
 
     if (password.length === 0) {
         msgchk.innerHTML = "Password cannot be empty";
+        return;
+    } else if ((password.length < 4 && password.length > 0) || (password.length > 16)) {
+        msgchk.innerHTML = "4 - 16 characters";
+        return;
     }
-    if ((password.length < 8 && password.length > 0) || (password.length > 16)) {
-        msgchk.innerHTML = "8 - 16 characters";
-    }
+
+    msgchk.innerHTML = "";
+    
 }
 
 function SubmitCheck(event) {
@@ -61,3 +69,30 @@ function SubmitCheck(event) {
         }
     }
 }
+
+function ChkUserNameUnique(username, msgchk) {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "/Account/UserNameUnique");
+    xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (this.status != 200) {
+                return;
+            }
+
+            let data = JSON.parse(this.responseText);
+
+            if (data.isUnique == "false") {
+                msgchk.innerHTML = "That username is taken. Try another.";
+            }
+        }
+    }
+
+        let data = { "Username": username };
+
+        xhr.send(JSON.stringify(data));
+}
+
