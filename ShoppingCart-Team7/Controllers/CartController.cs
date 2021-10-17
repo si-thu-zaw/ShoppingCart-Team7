@@ -192,12 +192,22 @@ namespace ShoppingCart_Team7.Controllers
             List<TempCart> tempCarts = dbContext.TempCarts.Where(x => x.TempSessionId.ToString() == tempsession).ToList();
             foreach (TempCart item in tempCarts)
             {
-                dbContext.Add(new Cart
+                Cart existingCart = dbContext.Carts.FirstOrDefault(x => x.UserId.ToString() == userid && x.ProductId.ToString() == item.ProductId.ToString());
+
+                if (existingCart == null)
                 {
-                    UserId = Guid.Parse(userid),
-                    Quantity = item.Quantity,
-                    ProductId = item.ProductId
-                });
+                    dbContext.Add(new Cart
+                    {
+                        UserId = Guid.Parse(userid),
+                        Quantity = item.Quantity,
+                        ProductId = item.ProductId
+                    });
+                }
+                else
+                {
+                    existingCart.Quantity++;
+                }
+                
                 dbContext.Remove(item);
             }
             dbContext.SaveChanges();
