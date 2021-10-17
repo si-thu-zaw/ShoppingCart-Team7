@@ -15,14 +15,13 @@ function UsernameCheck(event) {
     
     if (username_elem) {
         username = username_elem.value.trim();
-        //msgchk.innerHTML = "";
     }
 
     if (username.length === 0) {
         msgchk.innerHTML = "The username cannot be empty";
         return;
     } else if (username.length < 4 && username.length > 0) {
-        msgchk.innerHTML = "The username must be at least at least 4 characters long";
+        msgchk.innerHTML = "The username must be at least 4 characters long";
         return;
     } else if (username.length >= 4) {
         ChkUserNameUnique(username_elem.value, msgchk);
@@ -88,9 +87,7 @@ function ChkUserNameUnique(username, msgchk) {
             }
         }
     }
-
         let data = { "Username": username };
-
         xhr.send(JSON.stringify(data));
 }
 

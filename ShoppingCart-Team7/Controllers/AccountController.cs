@@ -19,11 +19,12 @@ namespace ShoppingCart_Team7.Controllers
             this.dbContext = dbContext;
         }
 
-        public IActionResult index()
+        public IActionResult Index()
         {
             return View();
         }
 
+        [HttpPost]
         public IActionResult Login(IFormCollection form)
         {
             string username = form["username"];

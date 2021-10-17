@@ -4,46 +4,35 @@
     ViewData["Title"] = "Login";
 }
 
-
-
-
-<h2>Login</h2>
-
 <form id="form" action="/Account/Login" method="POST">
     <div style="text-align:center" class="login">
+        <h1>LOGIN</h1>
         <div class="ac_tbl">
             <div class="ac_row">
                 <div class="ac_cell">
-                    Username:
-                </div>
-                <div class="ac_cell">
-                    <input id="username" name="username" type="text" class="form-control" />
+                    <input id="username" name="username" placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>
-                <div class="ac_cell"></div>
+                <div class="ac_cell"> </div>
             </div>
             <div class="ac_row">
                 <div class="ac_cell">
-                    Password:
+                    <input id="password" name="password" placeholder="Password" type="password" class="form-control" style="width: 250px"/>
                 </div>
-                <div class="ac_cell">
-                    <input id="password" name="password" type="password" class="form-control" />
-                </div>
-                <div class="ac_cell"></div>
-                <div class="ac_cell"></div>
             </div>
-            <div class="ac-row">
-                @if (exist == "N")
-                {
-                    <h4 style="text-align:center" class="ac_textred">Incorrect Username or Password. Please try again.</h4>
-                }
+            @if (exist == "N")
+            {
+                <div class="ac_row">
+                    <div id="msgchk" class="ac_cell ac_textred msgchk">Incorrect Username or Password. Please try again.</div>
+                </div>
+            }
+            <div class="ac_row">
+                <div class="ac_cell"> </div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>               
-                <div class="ac_cell" style="text-align: right">
-                    <input type="submit" value="Login" class="btn-success ac-btn" />
+                <div class="ac_cell">
+                    <input type="submit" value="Login" class="btn-success ac-btn" style="width: 250px"/>
                 </div>
             </div>
         </div>
