@@ -75,5 +75,19 @@ namespace ShoppingCart_Team7.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult UserNameUnique([FromBody] User newuser)
+        {
+            User user = dbContext.Users.FirstOrDefault(x =>
+                x.UserName == newuser.UserName.ToLower()
+            );
+
+            if (user != null)       
+            {
+                return Json(new{ isUnique = "false"});
+            }
+
+            return Json(new { isUnique = "true" });
+        }
     }
 }

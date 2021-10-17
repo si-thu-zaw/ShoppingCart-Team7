@@ -220,6 +220,8 @@ body {
 
 .ac_textred{
     color:red;
+    font-size:16px;
+    text-align:left;
 }
 
 .rating input[type="radio"]:not(:nth-of-type(0)) {
