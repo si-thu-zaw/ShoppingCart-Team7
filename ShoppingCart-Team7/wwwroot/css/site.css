@@ -189,9 +189,10 @@ body {
     overflow: hidden;
 }
 .pdtCatagory {
-    color: #808080;
+    color: darkcyan;
     font-size: 15px;
     font-weight: bold;
+
 }
 
 .pdtnametext {
