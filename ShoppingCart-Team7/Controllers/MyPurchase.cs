@@ -192,7 +192,7 @@ namespace ShoppingCart_Team7.Controllers
 
             Guid Id = Guid.NewGuid();
 
-            string connectionString = "Server=localhost; Database=ShoppingCartDB; User ID=sa; Password=bigStrongPwd10;";
+            string connectionString = "Server=localhost; Database=ShoppingCartDB; Integrated Security=True";
 
             string query = "INSERT INTO Reviews (Id,Comments,Rating,ReviewDate,PurchasesId,ProductId) VALUES(@Id,@comment,@rating,@reviewdatetime,@purchaseid,@productid)";
 
