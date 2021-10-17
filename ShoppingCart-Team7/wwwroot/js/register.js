@@ -15,7 +15,6 @@ function UsernameCheck(event) {
     
     if (username_elem) {
         username = username_elem.value.trim();
-        //msgchk.innerHTML = "";
     }
 
     if (username.length === 0) {
@@ -88,9 +87,7 @@ function ChkUserNameUnique(username, msgchk) {
             }
         }
     }
-
         let data = { "Username": username };
-
         xhr.send(JSON.stringify(data));
 }
 
