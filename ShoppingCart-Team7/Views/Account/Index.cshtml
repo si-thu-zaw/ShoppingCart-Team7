@@ -5,13 +5,12 @@
 }
 
 
-@if (exist == "N")
-{ 
-<h4 style="text-align:center" class="ac_textred">Pls input correct Username and Password.</h4>
-}
+
+
+<h2>Login</h2>
 
 <form id="form" action="/Account/Login" method="POST">
-    <div style="text-align:center">
+    <div style="text-align:center" class="login">
         <div class="ac_tbl">
             <div class="ac_row">
                 <div class="ac_cell">
@@ -35,13 +34,20 @@
                 <div class="ac_cell"></div>
                 <div class="ac_cell"></div>
             </div>
+            <div class="ac-row">
+                @if (exist == "N")
+                {
+                    <h4 style="text-align:center" class="ac_textred">Incorrect Username or Password. Please try again.</h4>
+                }
+            </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>
+                <div class="ac_cell"></div>               
                 <div class="ac_cell" style="text-align: right">
                     <input type="submit" value="Login" class="btn-success ac-btn" />
                 </div>
             </div>
         </div>
     </div>
+    <a class="float-right" href="~/account/register">Register for a new account</a>
 </form>
 

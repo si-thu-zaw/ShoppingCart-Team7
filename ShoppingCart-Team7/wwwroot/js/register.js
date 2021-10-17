@@ -19,10 +19,10 @@ function UsernameCheck(event) {
     }
 
     if (username.length === 0) {
-        msgchk.innerHTML = "Username cannot be empty";
+        msgchk.innerHTML = "The username cannot be empty";
         return;
     } else if (username.length < 4 && username.length > 0) {
-        msgchk.innerHTML = "At least 4 characters";
+        msgchk.innerHTML = "The username must be at least at least 4 characters long";
         return;
     } else if (username.length >= 4) {
         ChkUserNameUnique(username_elem.value, msgchk);
@@ -42,10 +42,10 @@ function PasswordCheck(event) {
     }
 
     if (password.length === 0) {
-        msgchk.innerHTML = "Password cannot be empty";
+        msgchk.innerHTML = "The password cannot be empty";
         return;
     } else if ((password.length < 4 && password.length > 0) || (password.length > 16)) {
-        msgchk.innerHTML = "4 - 16 characters";
+        msgchk.innerHTML = "The password must be 4 - 16 characters long";
         return;
     } else {
         msgchk.innerHTML = "";
@@ -82,7 +82,7 @@ function ChkUserNameUnique(username, msgchk) {
             let data = JSON.parse(this.responseText);
 
             if (data.isUnique == "false") {
-                msgchk.innerHTML = "That username is taken. Try another.";
+                msgchk.innerHTML = "This username is taken. Please try another username";
             } else {
                 msgchk.innerHTML = "";
             }
