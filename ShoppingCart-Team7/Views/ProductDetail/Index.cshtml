@@ -6,10 +6,16 @@
     var product = (Product)ViewData["product"];
     int rating = (int)ViewData["rating"];
     int rating_num = (int)ViewData["rating_num"];
+    int purchase_num = (int)ViewData["purchase_num"];
     List<Product> recommendation = (List<Product>)ViewData["Recommendation"];
+
+    List<Product> TopProdByPurchase = (List<Product>)ViewData["TopProdByPurchase"];
+    List<Product> TopProdByRatings = (List<Product>)ViewData["TopProdByRatings"];
 
     List<Review> aReviewList = (List<Review>)ViewData["aReviewList"];
     List<string> userNameList = (List<string>)ViewData["userNameList"];
+
+
     ViewData["Title"] = product.ProductName;
 }
 
@@ -50,6 +56,7 @@
             color: #363636;
             font-size: 50px;
             font-weight: 900;
+            margin-bottom:30px;
         }
 
         .rating {
@@ -60,7 +67,18 @@
 
         .review_nav {
             color: #808080;
-            font-size: 15px;
+            font-size: 18px;
+        }
+
+        .honor {
+            font-size: 20px;
+            background-color: orange;
+            font-weight: 700;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
         }
 
         .pricetext {
@@ -68,12 +86,13 @@
             color: #CD5C5C;
             font-size: 35px;
             font-weight: bold;
-            margin-top: 100px;
+            margin-top: 70px;
         }
 
         .description {
             color: #808080;
-            font-size: 16px;
+            font-size: 17px;
+            width:800px;
         }
 
         .detail-buy-button {
@@ -145,23 +164,38 @@
         <div class="detailbox">
             <p class="productCatagory">@product.Category</p>
             <h2 class="productnametext">@product.ProductName </h2>
-            <div class="rating">
-                @{
-                    for (int i = 0; i < rating; i++)
+            @{
+                foreach (var j in TopProdByPurchase)
+                    if (j.ProductName == product.ProductName)
                     {
-                        @:<span class="fa fa-star checked"></span>
+                        @:<span class="honor">Top 3 seller</span>
                     }
-                    for (int i = 0; i < (5 - rating); i++)
+
+                foreach (var k in TopProdByRatings)
+                    if (k.ProductName == product.ProductName)
                     {
-                        @:<span class="fa fa-star"></span>
-                    }
+                        @:<span class="honor">top 3 rating</span>
+                        }
+
+            }
+
+        <div class="rating">
+            @{
+                for (int i = 0; i < rating; i++)
+                {
+                    @:<span class="fa fa-star checked"></span>
                 }
-                <a href="#review">@rating_num reviews</a>
-            </div>
+                for (int i = 0; i < (5 - rating); i++)
+                {
+                    @:<span class="fa fa-star"></span>
+                }
+            }
+            <span class="review_nav"><a href="#review">&nbsp;&nbsp;@rating_num reviews</a> 丨 @purchase_num purchases</span>
+        </div> 
             <p class="description"><br />@product.Description</p>
             <p class="pricetext"> $ @product.Price.ToString("0.00")</p>
             <a href="~/addtocart/@product.Id"><button class="btn-dark btn-block detail-buy-button">Add to cart</button></a>
-</div>
+        </div>
     </div>
 
     <hr />

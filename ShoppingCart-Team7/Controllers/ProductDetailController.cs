@@ -39,8 +39,25 @@ namespace ShoppingCart_Team7.Controllers
             ViewData["rating_num"] = arating_num;
             ViewData["rating"] = arating;
 
+            // get purchased times from DB purchases table
+            List<Purchase> allpurchasesList = dbContext.Purchases.ToList();
+            var purchaseGroup = allpurchasesList.GroupBy(x => x.ProductId);
+            int purchase_num = 0;
+
+            foreach (var grp1 in purchaseGroup)
+                if (grp1.Key == Id)
+                    purchase_num = grp1.Count();
+
+            ViewData["purchase_num"] = purchase_num;
+
+
+            // get Top sales and top purchase
+
+            ViewData["TopProdByPurchase"] = GetTopSales();
+            ViewData["TopProdByRatings"] = GetTopRating();
+
             // get per review detail from DB reviews table
-            List<Review> aReviewList = dbContext.Reviews.Where(x => x.ProductId == Id).ToList();
+            List<Review> aReviewList = dbContext.Reviews.Where(x => x.ProductId == Id).OrderByDescending(x => x.ReviewDate).ToList();
 
             List<string> userNameList = new List<string>();
 
@@ -110,6 +127,44 @@ namespace ShoppingCart_Team7.Controllers
                 };
             }
             return userName;
+        }
+
+        // Get top sales and rating products
+        public List<Product> GetTopSales()
+        {
+            List<Purchase> AllPurchases = dbContext.Purchases.ToList();
+            List<Product> TopProdByPurchase = new List<Product>();
+            
+            // To find top 5 products based on purchase count
+            var PurchaseCnt = AllPurchases.GroupBy(x => x.ProductId)
+                                             .OrderByDescending(x => x.Count())
+                                             .Take(3);
+
+            // Add top 5 products into TopProdByPurchase
+            foreach (var product in PurchaseCnt)
+            {
+                TopProdByPurchase.Add(dbContext.Products.FirstOrDefault(x => x.Id == product.Key));
+            }
+
+            return TopProdByPurchase;
+        }
+
+        public List<Product> GetTopRating()
+        {
+            List<Review> AllReviews = dbContext.Reviews.ToList();
+            List<Product> TopProdByRatings = new List<Product>();
+
+            var Ratings = AllReviews.GroupBy(x => x.ProductId)
+                                    .OrderByDescending(x => x.Average(x => x.Rating))
+                                    .Take(3);
+
+            // Add top 5 products into TopProdByRatings
+            foreach (var product in Ratings)
+            {
+                TopProdByRatings.Add(dbContext.Products.FirstOrDefault(x => x.Id == product.Key));
+            }
+
+            return TopProdByRatings;
         }
 
         // GetRecommendations function
