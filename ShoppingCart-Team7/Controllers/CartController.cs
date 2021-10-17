@@ -271,8 +271,43 @@ namespace ShoppingCart_Team7.Controllers
                 dbContext.Remove(item);
             }
             dbContext.SaveChanges();
+            List<Purchase> Purchases = dbContext.Purchases.Where(x => x.PurchaseDate == currentDate).ToList();
+            return RedirectToAction("ThisPurchase", new {date = currentDate});
+        }
+        public IActionResult ThisPurchase(DateTime date)
+        {
+            string userid = GetUserOrSession();
+            List<Purchase> Purchase = dbContext.Purchases.ToList();
+            List<Purchase> CurrentPurchase = new List<Purchase>();
+            foreach (Purchase purchase in Purchase)
+            {
+                if (purchase.PurchaseDate.ToLongTimeString() == date.ToLongTimeString() && purchase.UserId.ToString() == userid)
+                {
+                    CurrentPurchase.Add(purchase);
+                }
+            }
+            if (CurrentPurchase.Count == 0)
+            {
+                return RedirectToAction("Index", "MyPurchase");
+            }
+            List<Product> products = dbContext.Products.ToList();
 
-            return RedirectToAction("ThisPurchase", "MyPurchase", currentDate.ToString());
+            List<PurchaseCodes> codes = new List<PurchaseCodes>();
+
+            codes = (List<PurchaseCodes>)(from p in CurrentPurchase
+                                          group p by new { p.ProductId, p.PurchaseDate } into grp
+                                          select new PurchaseCodes()
+                                          {
+                                              PID_PDATE = grp.Key.ToString(),
+                                              ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
+                                              Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                              Date = grp.Key.PurchaseDate
+                                          }).ToList();
+
+            ViewData["purchases"] = CurrentPurchase;
+            ViewData["products"] = products;
+            ViewData["codes"] = codes;
+            return View();
         }
 
         /* public IActionResult Index()

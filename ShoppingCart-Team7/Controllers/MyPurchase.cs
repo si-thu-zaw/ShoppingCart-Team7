@@ -269,44 +269,5 @@ namespace ShoppingCart_Team7.Controllers
 
             return View("Index");
         }
-
-        public IActionResult ThisPurchase(string purchaseDate)
-        {
-            string username = Request.Cookies["Username"];
-
-            Session currentSession = dbContext.Sessions.FirstOrDefault(x => x.Id.ToString() == Request.Cookies["SessionId"]);
-            string user = currentSession.UserId.ToString();
-
-            User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
-
-            List<Purchase> CurrentPurchase = dbContext.Purchases.Where(x => x.UserId.ToString() == user && x.PurchaseDate == DateTime.Parse(purchaseDate)).ToList();
-            if (CurrentPurchase.Count == 0)
-            {
-                return RedirectToAction("Index", "MyPurchase");
-            }
-            List<Product> products = dbContext.Products.ToList();
-            List<Purchase> sortPurchases = Sort(CurrentPurchase, products, 0);
-            List<Review> reviews = dbContext.Reviews.ToList();
-
-            List<PurchaseCodes> codes = new List<PurchaseCodes>();
-
-            codes = (List<PurchaseCodes>)(from p in sortPurchases
-                                          group p by new { p.ProductId, p.PurchaseDate } into grp
-                                          select new PurchaseCodes()
-                                          {
-                                              PID_PDATE = grp.Key.ToString(),
-                                              ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
-                                              Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                              Date = grp.Key.PurchaseDate
-                                          }).ToList();
-
-            ViewData["purchases"] = sortPurchases;
-            ViewData["products"] = products;
-            ViewData["reviews"] = reviews;
-            ViewData["searchStr"] = "";
-
-            return View();
-        }
-
     }
 }
