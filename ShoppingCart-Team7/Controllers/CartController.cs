@@ -248,7 +248,7 @@ namespace ShoppingCart_Team7.Controllers
         {
             if (Request.Cookies["SessionId"] == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Account");
             }
 
             string userid = GetUserOrSession();
