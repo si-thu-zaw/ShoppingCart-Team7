@@ -56,7 +56,8 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.PurchaseDate
+                                                  Date = grp.Key.PurchaseDate,
+                                                  PurchaseIDs = grp.Select(a => a.Id).ToList()
                                               }).OrderByDescending(x=>x.Date).ToList();
             }
             else if (id == 5)
@@ -68,7 +69,8 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.PurchaseDate
+                                                  Date = grp.Key.PurchaseDate,
+                                                  PurchaseIDs = grp.Select(a => a.Id).ToList()
                                               }).OrderBy(x=>x.Date).ToList();
             }
             else
@@ -80,7 +82,8 @@ namespace ShoppingCart_Team7.Controllers
                                                   PID_PDATE = grp.Key.ToString(),
                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
                                                   Quantity = grp.Select(a => a.ActivationCode).Count(),
-                                                  Date = grp.Key.PurchaseDate
+                                                  Date = grp.Key.PurchaseDate,
+                                                  PurchaseIDs = grp.Select(a => a.Id).ToList()
                                               }).ToList();
             }
 

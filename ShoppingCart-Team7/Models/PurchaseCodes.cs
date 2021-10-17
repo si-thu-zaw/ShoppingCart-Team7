@@ -13,5 +13,6 @@ namespace ShoppingCart_Team7.Models
         public int Quantity { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }
+        public List<Guid> PurchaseIDs { get; set; }
     }
 }
