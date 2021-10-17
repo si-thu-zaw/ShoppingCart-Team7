@@ -5,8 +5,6 @@
     let password_elem = document.getElementById("password");
     password_elem.addEventListener('blur', PasswordCheck);
 
-    let form_elem = document.getElementById("form");
-    form_elem.addEventListener('submit', SubmitCheck);
 }
 
 function UsernameCheck(event) {
@@ -16,7 +14,7 @@ function UsernameCheck(event) {
     let msgchk = document.getElementById("usernamechk");
     
     if (username_elem) {
-        username = username_elem.value.trim();   
+        username = username_elem.value.trim();
     }
 
     if (username.length === 0) {
@@ -25,12 +23,10 @@ function UsernameCheck(event) {
     } else if (username.length < 4 && username.length > 0) {
         msgchk.innerHTML = "At least 4 characters";
         return;
-    } else {
+    } else if (username.length >= 4) {
         ChkUserNameUnique(username_elem.value, msgchk);
         return;
-    }
-    
-    msgchk.innerHTML = "";
+    } 
 }
 
 function PasswordCheck(event) {
@@ -50,10 +46,9 @@ function PasswordCheck(event) {
     } else if ((password.length < 4 && password.length > 0) || (password.length > 16)) {
         msgchk.innerHTML = "4 - 16 characters";
         return;
-    }
-
-    msgchk.innerHTML = "";
-    
+    } else {
+        msgchk.innerHTML = "";
+    }  
 }
 
 function SubmitCheck(event) {
@@ -87,12 +82,12 @@ function ChkUserNameUnique(username, msgchk) {
 
             if (data.isUnique == "false") {
                 msgchk.innerHTML = "That username is taken. Try another.";
+            } else {
+                msgchk.innerHTML = "";
             }
         }
     }
-
         let data = { "Username": username };
-
         xhr.send(JSON.stringify(data));
 }
 

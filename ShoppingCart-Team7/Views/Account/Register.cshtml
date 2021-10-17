@@ -1,45 +1,36 @@
 ﻿
 @{
-   
+
 }
 
 @section Scripts
 {
-<script src="~/js/register.js"></script>
+    <script src="~/js/register.js"></script>
 }
 
-
-<form id="form" action="/Account/Register" method="POST" onsubmit="return SubmitCheck()">
+<form id="form" action="/Account/Register" method="POST", onsubmit="return SubmitCheck()">
     <div style="text-align:center">
+        <h1>REGISTER</h1>
         <div class="ac_tbl">
             <div class="ac_row">
                 <div class="ac_cell">
-                    Username:
-                </div>
-                <div class="ac_cell">
-                    <input id="username" name="username" type="text" class="form-control" />
+                    <input id="username" name="username" value placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>
                 <div id="usernamechk" class="ac_cell ac_textred msgchk"></div>
             </div>
             <div class="ac_row">
                 <div class="ac_cell">
-                    Password:
-                </div>
-                <div class="ac_cell">
-                    <input id="password" name="password" type="password" class="form-control" />
+                    <input id="password" name="password" value placeholder="Password" type="password" class="form-control" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>
                 <div id="passowrdchk" class="ac_cell ac_textred msgchk"></div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>
                 <div class="ac_cell" style="text-align: right">
-                    <input id="submit" type="submit" value="Submit" class="btn btn-success" />
+                    <input id="submit" type="submit" value="Register Now" class="btn-success ac-btn" style="width: 250px"/>
                 </div>
             </div>
         </div>

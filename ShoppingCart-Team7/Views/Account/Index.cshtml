@@ -5,34 +5,35 @@
 }
 
 
-@if (exist == "N")
-{ 
-<h4 style="text-align:center" class="ac_textred">Pls input correct Username and Password.</h4>
-}
-
 <form id="form" action="/Account/Login" method="POST">
     <div style="text-align:center">
+        <h1 >LOGIN</h1>
         <div class="ac_tbl">
             <div class="ac_row">
                 <div class="ac_cell">
-                    Username:
-                </div>
-                <div class="ac_cell">
-                    <input id="username" name="username" type="text" class="form-control" />
+                    <input id="username" name="username" value placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell">
-                    Password:
-                </div>
-                <div class="ac_cell">
-                    <input id="password" name="password" type="password" class="form-control" />
-                </div>
+                <div class="ac_cell"> </div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell"></div>
-                <div class="ac_cell" style="text-align: right">
-                    <input type="submit" value="Login" class="btn btn-success" />
+                <div class="ac_cell">
+                    <input id="password" name="password" value placeholder="Password" type="password" class="form-control" style="width: 250px"/>
+                </div>
+            </div>
+            @if (exist == "N")
+            {
+                <div class="ac_row">
+                    <div id="msgchk" class="ac_cell ac_textred msgchk">Pls input correct Username and Password.</div>
+                </div>
+            }
+            <div class="ac_row">
+                <div class="ac_cell"> </div>
+            </div>
+            <div class="ac_row">
+                <div class="ac_cell">
+                    <input type="submit" value="Login" class="btn-success ac-btn" style="width: 250px"/>
                 </div>
             </div>
         </div>
