@@ -64,5 +64,15 @@ namespace ShoppingCart_Team7.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult NewUser()
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
