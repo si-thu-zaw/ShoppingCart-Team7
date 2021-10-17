@@ -45,7 +45,7 @@
                                                     <i class="fas fa-trash-alt mr-1"></i> Remove item
                                                 </a>
                                             </div>
-                                            <p class="mb-0"><span><strong id="summary">$@summaryPrice</strong></span></p>
+                                            <p class="mb-0"><span><strong id="summary">@string.Format($"{summaryPrice:$#,##0.00}")</strong></span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                     <div>
                                         <strong>Total</strong>
                                     </div>
-                                    <span><strong>$@totalPrice</strong></span>
+                                    <span><strong>@string.Format($"{totalPrice:$#,##0.00}")</strong></span>
                                 </li>
                             </ul>
 
