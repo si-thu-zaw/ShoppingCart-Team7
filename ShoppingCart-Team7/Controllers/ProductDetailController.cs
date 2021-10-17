@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.Data.SqlClient;
 using ShoppingCart_Team7.Controllers;
+using Microsoft.Extensions.Configuration;
 
 namespace ShoppingCart_Team7.Controllers
 {
     public class ProductDetailController : Controller
     {
         private DBContext dbContext;
-        public ProductDetailController(DBContext dbContext)
+        private readonly IConfiguration Configuration;
+        public ProductDetailController(DBContext dbContext, IConfiguration _configuration)
         {
             this.dbContext = dbContext;
+            Configuration = _configuration;
         }
 
         public IActionResult Index(Guid Id)
@@ -77,9 +80,9 @@ namespace ShoppingCart_Team7.Controllers
         }
 
         // Get AllDetail funtion
-        protected static readonly string connectionString = "Server=OBELISK\\SQLEXPRESS;Database=ShoppingCartDB; Integrated Security=true";
-        public static Product GetAllDetails(Guid Id)
+        public Product GetAllDetails(Guid Id)
         {
+            string connectionString = this.Configuration.GetConnectionString("db_conn");
             Product product = null;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -109,6 +112,7 @@ namespace ShoppingCart_Team7.Controllers
         // GetReviewUser
         public string GetReviewUser(Guid ReviewId)
         {
+            string connectionString = this.Configuration.GetConnectionString("db_conn");
             string userName = "";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {

@@ -65,5 +65,42 @@ namespace ShoppingCart_Team7.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(IFormCollection form)
+        {
+            string username = form["username"];
+            string password = form["password"];
+
+            HashAlgorithm sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
+
+            dbContext.Add(new User{
+                UserName=username,
+                PasswordHash=hash
+            });
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult UserNameUnique([FromBody] User newuser)
+        {
+            User user = dbContext.Users.FirstOrDefault(x =>
+                x.UserName == newuser.UserName.ToLower()
+            );
+
+            if (user != null)       
+            {
+                return Json(new{ isUnique = "false"});
+            }
+
+            return Json(new { isUnique = "true" });
+        }
     }
 }

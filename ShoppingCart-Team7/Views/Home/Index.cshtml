@@ -23,7 +23,7 @@
                                     <h6 class="card-title">@bs.ProductName</h6>
                                 </div>
                             </a>
-                            <a href="~/addtocart/@bs.Id"><button type="button" class="btn-dark btn-block home-buy-button">$@bs.Price Add to Cart</button></a>
+                            <a href="~/addtocart/@bs.Id"><button type="button" class="btn-dark btn-block home-buy-button">@string.Format($"{bs.Price:$#,##0.00}")  Add to Cart</button></a>
                         </div>
                     </div>
                 }
@@ -45,7 +45,7 @@
                                     <h6 class="card-title">@ts.ProductName</h6>
                                 </div>
                             </a>
-                            <a href="~/addtocart/@ts.Id"><button type="button" class="btn-dark btn-block home-buy-button">$@ts.Price Add to Cart</button></a>
+                            <a href="~/addtocart/@ts.Id"><button type="button" class="btn-dark btn-block home-buy-button">@string.Format($"{ts.Price:$#,##0.00}")  Add to Cart</button></a>
                         </div>
                     </div>
                 }

@@ -3,17 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using ShoppingCart_Team7.Models;
 using System.Dynamic;
-
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
-
-
 using Microsoft.Data.SqlClient;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.Extensions.Configuration;
 
 namespace ShoppingCart_Team7.Controllers
 {
@@ -21,16 +18,17 @@ namespace ShoppingCart_Team7.Controllers
     {
         private DBContext dbContext; // dont forget to create ref
         private readonly INotyfService _notyf;
-        public MyPurchaseController(DBContext dbContext, INotyfService notyf) // dont forget to instantiate
+        private readonly IConfiguration Configuration;
+
+        public MyPurchaseController(DBContext dbContext, INotyfService notyf, IConfiguration _configuration) // dont forget to instantiate
         {
             this.dbContext = dbContext;
             _notyf = notyf;
+            Configuration = _configuration;
         }
 
         public IActionResult Index(int id)
         {
-
-            
             _notyf.Success("Success Notification");
 
             string username = Request.Cookies["Username"];
@@ -184,15 +182,13 @@ namespace ShoppingCart_Team7.Controllers
             string proid = form["productid"];
             string purid = form["purchaseid"];
 
-        
-
             DateTime reviewdatetime = DateTime.Now;
             Guid productid = Guid.Parse(proid);
             Guid purchaseid = Guid.Parse(purid);
 
             Guid Id = Guid.NewGuid();
 
-            string connectionString = "Server=localhost; Database=ShoppingCartDB; Integrated Security=True";
+            string connectionString = this.Configuration.GetConnectionString("db_conn");
 
             string query = "INSERT INTO Reviews (Id,Comments,Rating,ReviewDate,PurchasesId,ProductId) VALUES(@Id,@comment,@rating,@reviewdatetime,@purchaseid,@productid)";
 
