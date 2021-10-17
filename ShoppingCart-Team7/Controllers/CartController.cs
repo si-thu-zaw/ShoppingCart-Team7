@@ -281,7 +281,7 @@ namespace ShoppingCart_Team7.Controllers
             List<Purchase> CurrentPurchase = new List<Purchase>();
             foreach (Purchase purchase in Purchase)
             {
-                if (purchase.PurchaseDate.ToLongTimeString() == date.ToLongTimeString() && purchase.UserId.ToString() == userid)
+                if (purchase.PurchaseDate.ToLongDateString() == date.ToLongDateString() && purchase.PurchaseDate.ToLongTimeString() == date.ToLongTimeString() && purchase.UserId.ToString() == userid)
                 {
                     CurrentPurchase.Add(purchase);
                 }
