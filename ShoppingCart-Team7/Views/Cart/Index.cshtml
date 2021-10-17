@@ -36,7 +36,7 @@
 
                                             </div>
                                             <div>
-                                                <form action="~/changequantity"><input type="hidden" name="id" value="@item.CartID" /><input type="number" name="quantity" value="@item.Quantity" />      <input type="submit" value="Change Quantity"></form>
+                                                <form action="~/changequantity"><input type="hidden" name="id" value="@item.CartID" /><input type="number" name="quantity" min="1" value="@item.Quantity" />      <input type="submit" value="Change Quantity"></form>
 
                                             </div>
                                         </div>
