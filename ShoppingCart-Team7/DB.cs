@@ -145,7 +145,7 @@ namespace ShoppingCart_Team7
                 {
                     Purchase purchase = new Purchase
                     {
-                        PurchaseDate = new DateTime(2021, r.Next(1, 13), r.Next(1, 29), 9, 0, 0, DateTimeKind.Local),
+                        PurchaseDate = new DateTime(2021, r.Next(1, 10), r.Next(1, 29), 9, 0, 0, DateTimeKind.Local),
                         ActivationCode = Guid.NewGuid()
                     };
 
