@@ -215,7 +215,7 @@
                                         <h6 class="card-title" align="center">@rec.ProductName</h6>
                                     </div>
                                 </a>
-                                <a href="~/addtocart/@rec.Id"><button type="button" class="btn-dark btn-block home-buy-button">$@rec.Price Add to Cart</button></a>
+                                <a href="~/addtocart/@rec.Id"><button type="button" class="btn-dark btn-block home-buy-button">@rec.Price.ToString("C") Add to Cart</button></a>
                             </div>
                         </div>
                     }
