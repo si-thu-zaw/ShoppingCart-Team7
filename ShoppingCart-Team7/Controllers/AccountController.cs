@@ -86,7 +86,7 @@ namespace ShoppingCart_Team7.Controllers
             });
             dbContext.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Account");
         }
 
         public IActionResult UserNameUnique([FromBody] User newuser)
