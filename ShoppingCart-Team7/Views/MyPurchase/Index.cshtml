@@ -110,7 +110,7 @@
             {
                 string[] productInfos = c.PID_PDATE.Split(',');
                 string productInfo = productInfos[0].Substring(14, 36);
-                string purchaseDate = c.Date.ToString("dddd, dd MMMM yyyy hh:mm tt");
+                string purchaseDate = c.Date.ToString("dd MMMM yyyy hh:mm tt");
                 List<Guid> ActivationCodes = c.ActivationCodes;
                 List<Guid> PurchasesIDs = c.PurchaseIDs;
 
@@ -184,7 +184,7 @@
                             </div>
                             <div class="container pt-3">
                                 <div class="d-flex flex-row-reverse">
-                                    <a class="btn btn-light btn-lg shadow-sm mx-2" href="~/addtocart/@pdt.Id" role="button">Buy Again</a>
+                                    <a class="btn btn-warning shadow-sm mx-2" href="~/addtocart/@pdt.Id" role="button">Buy Again</a>
                                    @* <a class="btn btn-warning btn-lg shadow-sm mx-2" href="#" role="button">
                                         @{
                                             if (review == null)
@@ -199,9 +199,11 @@
                                     </a>*@
                                     @{ if (review != null)
                                         {
-                                            <a class="btn btn-warning shadow-sm mx-2" href="#" role="button">See Review</a> }
-                                        else
-                                        {
+                                            <div></div>
+                                        }
+                                            @*<a class="btn btn-warning shadow-sm mx-2" href="#" role="button">See Review</a> }*@
+                                    else
+                                    {
 
                                             <button type="button" class="btn btn-success shadow-sm mx-2" data-bs-toggle="modal" data-bs-target="#AddReviewModal" onclick="addReviewFunction('@pdt.Id.ToString().ToUpper()','@PurchasesIDs[0].ToString().ToUpper()')">
                                                 Add Review
@@ -316,7 +318,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success shadow-sm mx-2">ADD</button>
+                    <button type="submit" class="btn btn-success shadow-sm mx-2">Add</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="myFunction2()">Close</button>
                 </div>
 
