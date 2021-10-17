@@ -80,7 +80,6 @@ namespace ShoppingCart_Team7.Controllers
         }
 
         // Get AllDetail funtion
-        // protected static readonly string connectionString = "Server=localhost;Database=ShoppingCartDB; Integrated Security=true";
         public Product GetAllDetails(Guid Id)
         {
             string connectionString = this.Configuration.GetConnectionString("db_conn");
