@@ -271,7 +271,8 @@ namespace ShoppingCart_Team7.Controllers
                 dbContext.Remove(item);
             }
             dbContext.SaveChanges();
-            return RedirectToAction("Index", "MyPurchase");
+
+            return RedirectToAction("ThisPurchase", "MyPurchase", currentDate.ToString());
         }
 
         /* public IActionResult Index()

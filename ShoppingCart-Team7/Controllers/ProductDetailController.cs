@@ -77,7 +77,7 @@ namespace ShoppingCart_Team7.Controllers
         }
 
         // Get AllDetail funtion
-        protected static readonly string connectionString = "Server=localhost;Database=ShoppingCartDB; Integrated Security=true";
+        protected static readonly string connectionString = "Server=OBELISK\\SQLEXPRESS;Database=ShoppingCartDB; Integrated Security=true";
         public static Product GetAllDetails(Guid Id)
         {
             Product product = null;
