@@ -1,6 +1,6 @@
 ﻿
 @{
-
+    ViewData["Title"] = "Registration";
 }
 
 @section Scripts
@@ -9,12 +9,12 @@
 }
 
 <form id="form" action="/Account/Register" method="POST", onsubmit="return SubmitCheck()">
-    <div style="text-align:center">
-        <h1>REGISTER</h1>
+    <div style="text-align:center" class="login">
+        <h1>ACCOUNT REGISTRATION</h1>
         <div class="ac_tbl">
             <div class="ac_row">
                 <div class="ac_cell">
-                    <input id="username" name="username" value placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
+                    <input id="username" name="username" placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
@@ -22,14 +22,14 @@
             </div>
             <div class="ac_row">
                 <div class="ac_cell">
-                    <input id="password" name="password" value placeholder="Password" type="password" class="form-control" style="width: 250px"/>
+                    <input id="password" name="password" placeholder="Password" type="password" class="form-control" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
                 <div id="passowrdchk" class="ac_cell ac_textred msgchk"></div>
             </div>
             <div class="ac_row">
-                <div class="ac_cell" style="text-align: right">
+                <div class="ac_cell">
                     <input id="submit" type="submit" value="Register Now" class="btn-success ac-btn" style="width: 250px"/>
                 </div>
             </div>

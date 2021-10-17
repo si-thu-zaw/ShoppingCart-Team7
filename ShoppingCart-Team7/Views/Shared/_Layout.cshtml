@@ -24,14 +24,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Gallery" asp-action="Index">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MyPurchase" asp-action="Index">MyPurchase</a>
                         </li>
                     </ul>
 
@@ -39,10 +33,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Cart" asp-action="Index">Cart</a>
                         </li>
-
-                        @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Index">Login</a>
-                            </li>*@
                         @if (Context.Request.Cookies["SessionId"] != null)
                         {
                             <li class="nav-item">
@@ -53,7 +43,6 @@
                                     </span>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-item"><a class="nav-link text-dark" asp-area="" asp-controller="MyPurchase" asp-action="Index">My Purchases</a></li>
-                                        <li class="dropdown-item"><a class="nav-link text-dark" asp-area="" asp-controller="MyPurchase" asp-action="Index">My Account</a></li>
                                         <li class="dropdown-item"><a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
                                     </ul>
                                 </div>
@@ -68,11 +57,6 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Login</a>
                             </li>
                         }
-                        @*<li class="nav-item">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action(" Index", "Home" , new { area="" })">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </li>*@
                     </ul>
                 </div>
             </div>
@@ -87,7 +71,7 @@
     <div style="height: 50px;"></div>
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - ShoppingCart_Team7 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - ShoppingCart_Team7
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
