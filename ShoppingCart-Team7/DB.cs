@@ -21,14 +21,10 @@ namespace ShoppingCart_Team7
         public void Seed()
         {
             SeedUsers();
-            // SeedSession();
             SeedProducts();
             SeedProducts1();
             SeedPurchase();
             SeedReview();
-            // SeedCart();
-            // SeedCart1();
-            SeedPurchase1();
         }
 
         public void SeedUsers()
@@ -161,42 +157,6 @@ namespace ShoppingCart_Team7
             dbContext.SaveChanges();
         }
 
-        public void SeedPurchase1()
-        {
-            User user = dbContext.Users.FirstOrDefault(x => x.UserName == "charles");
-            Product product1 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Magpie");
-            Product product2 = dbContext.Products.FirstOrDefault(x => x.ProductName == "Nineteen Minutes");
-
-            if (user!=null&&product1!=null)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Purchase purchase = new Purchase
-                    {
-                        PurchaseDate = new DateTime(2021, 9, 29, 14, 3, 4, DateTimeKind.Local),
-                        ActivationCode = Guid.NewGuid()
-                    };
-                    user.Purchases.Add(purchase);
-                    product1.Purchases.Add(purchase);
-                }
-            }
-            if (user != null && product2 != null)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    Purchase purchase = new Purchase
-                    {
-                        PurchaseDate = new DateTime(2020, 5, 6, 12, 8, 4, DateTimeKind.Local),
-                        ActivationCode = Guid.NewGuid()
-                    };
-                    user.Purchases.Add(purchase);
-                    product2.Purchases.Add(purchase);
-                }
-            }
-
-            dbContext.SaveChanges();
-        }
-
         public void SeedReview()
         {
             List<Purchase> AllPurchases = dbContext.Purchases.ToList();
@@ -240,93 +200,6 @@ namespace ShoppingCart_Team7
                 dbContext.SaveChanges();
             }
             
-        }
-
-        public void SeedSession()
-        {
-            List<User> AllUsers = dbContext.Users.ToList();
-
-            // variable decides how many session to create
-            int SessionCount = 5;
-
-            for (int i = 0; i < SessionCount; i++)
-            {
-                User user = AllUsers[i];
-
-                if (user != null)
-                {
-                    Session session = new Session()
-                    {
-                        SessionTime = DateTimeOffset.Now.ToUnixTimeSeconds(),
-                        Valid = true
-                    };
-
-                    user.Sessions.Add(session);
-                }
-                dbContext.SaveChanges();
-            }
-        }
-
-        public void SeedCart()
-        {
-            List<User> AllUsers = dbContext.Users.ToList();
-            List<Product> AllProducts = dbContext.Products.ToList();
-
-            // variable decides how many items will be in a cart for each user
-            int CartItem = 2;
-
-            Random r = new Random();
-
-            for (int i = 0; i < AllUsers.Count; i++)
-            {
-                User user = AllUsers[i];
-
-                for (int j = 0; j < CartItem; j++)
-                {
-                    // Choose random product to add to cart
-                    Product item = AllProducts[r.Next(AllProducts.Count)];
-
-                    if (user != null && item != null)
-                    {
-                        Cart cart = new Cart
-                        {
-                            Quantity = r.Next(1, 4)
-                        };
-
-                        user.Carts.Add(cart);
-                        item.Carts.Add(cart);
-                    }
-                }
-            }
-
-            dbContext.SaveChanges();
-        }
-
-        public void SeedCart1()
-        {
-            List<Purchase> purchases = dbContext.Purchases.ToList();
-
-            Random r = new Random();
-
-            foreach (Purchase p in purchases)
-            {
-                Product pdt = dbContext.Products.FirstOrDefault(x => x.Id == p.ProductId);
-                User u = dbContext.Users.FirstOrDefault(x => x.Id == p.UserId);
-
-                if (pdt!=null&&u!=null)
-                {
-                    Cart cart = new Cart
-                    {
-                        Quantity = r.Next(1, 4)
-                    };
-
-                    pdt.Carts.Add(cart);
-                    u.Carts.Add(cart);
-                }
-            }
-
-            dbContext.SaveChanges();
-
         }
     }
 }
