@@ -21,13 +21,13 @@ namespace ShoppingCart_Team7
         public void Seed()
         {
             SeedUsers();
-            SeedSession();
+            // SeedSession();
             SeedProducts();
             SeedProducts1();
             SeedPurchase();
             SeedReview();
-            SeedCart();
-            SeedCart1();
+            // SeedCart();
+            // SeedCart1();
             SeedPurchase1();
         }
 
@@ -196,12 +196,6 @@ namespace ShoppingCart_Team7
 
             dbContext.SaveChanges();
         }
-
-            
-        
-
-
-    
 
         public void SeedReview()
         {
