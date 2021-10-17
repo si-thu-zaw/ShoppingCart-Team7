@@ -71,8 +71,21 @@ namespace ShoppingCart_Team7.Controllers
             return View();
         }
 
-        public IActionResult NewUser()
+        [HttpPost]
+        public IActionResult Register(IFormCollection form)
         {
+            string username = form["username"];
+            string password = form["password"];
+
+            HashAlgorithm sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(username + password));
+
+            dbContext.Add(new User{
+                UserName=username,
+                PasswordHash=hash
+            });
+            dbContext.SaveChanges();
+
             return RedirectToAction("Index", "Home");
         }
 
