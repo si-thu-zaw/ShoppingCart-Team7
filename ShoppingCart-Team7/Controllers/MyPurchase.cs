@@ -262,6 +262,7 @@ namespace ShoppingCart_Team7.Controllers
             ViewData["products"] = products;
             ViewData["searchStr"] = "";
             ViewData["reviews"] = reviews;
+            ViewData["id"] = 0;
 
             return View("Index");
         }
