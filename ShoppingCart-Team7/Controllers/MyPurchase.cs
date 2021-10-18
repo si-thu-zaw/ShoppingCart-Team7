@@ -99,7 +99,7 @@ namespace ShoppingCart_Team7.Controllers
 
         public List<Purchase> Sort(List<Purchase> p, List<Product> pdt, int id)
         {
-            DateTime today = DateTime.Today;
+            DateTime today = DateTime.Today.AddDays(1);
             DateTime endMonth = DateTime.Today.AddDays(-30);
             DateTime endYear = DateTime.Today.AddYears(-1);
 
