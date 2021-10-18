@@ -4,14 +4,13 @@
     ViewData["Title"] = "Login";
 }
 
-
 <form id="form" action="/Account/Login" method="POST">
-    <div style="text-align:center">
-        <h1 >LOGIN</h1>
+    <div style="text-align:center" class="login">
+        <h1>LOGIN</h1>
         <div class="ac_tbl">
             <div class="ac_row">
                 <div class="ac_cell">
-                    <input id="username" name="username" value placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
+                    <input id="username" name="username" placeholder="Username" type="text" class="form-control" autocomplete="off" style="width: 250px"/>
                 </div>
             </div>
             <div class="ac_row">
@@ -19,13 +18,13 @@
             </div>
             <div class="ac_row">
                 <div class="ac_cell">
-                    <input id="password" name="password" value placeholder="Password" type="password" class="form-control" style="width: 250px"/>
+                    <input id="password" name="password" placeholder="Password" type="password" class="form-control" style="width: 250px"/>
                 </div>
             </div>
             @if (exist == "N")
             {
                 <div class="ac_row">
-                    <div id="msgchk" class="ac_cell ac_textred msgchk">Pls input correct Username and Password.</div>
+                    <div id="msgchk" class="ac_cell ac_textred msgchk">Incorrect Username or Password. Please try again.</div>
                 </div>
             }
             <div class="ac_row">
@@ -38,5 +37,6 @@
             </div>
         </div>
     </div>
+    <a class="float-right" href="~/account/register">Register for a new account</a>
 </form>
 

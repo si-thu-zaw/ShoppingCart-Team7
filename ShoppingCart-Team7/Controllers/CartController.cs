@@ -274,6 +274,7 @@ namespace ShoppingCart_Team7.Controllers
             List<Purchase> Purchases = dbContext.Purchases.Where(x => x.PurchaseDate == currentDate).ToList();
             return RedirectToAction("ThisPurchase", new {date = currentDate});
         }
+        //Shows the items from the current checkout on the confirmation page
         public IActionResult ThisPurchase(DateTime date)
         {
             string userid = GetUserOrSession();
@@ -309,87 +310,5 @@ namespace ShoppingCart_Team7.Controllers
             ViewData["codes"] = codes;
             return View();
         }
-
-        /* public IActionResult Index()
-        {
-            string userid = "991A7B0D-E236-4E07-DE0B-08D98EF0D7D7";
-            List<CartItems> anotherCartList = new List<CartItems>();
-            anotherCartList = dbContext.Carts.Join(
-                dbContext.Products,
-                Cart => Cart.ProductId,
-                Product => Product.Id,
-                (Cart, Product) => new CartItems
-                {
-                    ProductName = Product.ProductName,
-                    ProductImg = Product.ImageSrc,
-                    Quantity = Cart.Quantity,
-                    Price = Product.Price,
-                    User = Cart.UserId.ToString(),
-                    CartID = Cart.Id.ToString()
-                }
-                ).Where(x =>
-                    x.User.Equals(userid)
-                ).ToList();
-
-            // compute price of every item in cart
-            var iter =
-                from cart in anotherCartList
-                select new { itemsPrice = cart.Price*cart.Quantity};
-
-
-            //compute total price in cart
-            var totalPrice = 0f;
-            foreach(var cart in iter)
-            {
-                totalPrice += cart.itemsPrice;
-            }
-
-            ViewData["totalprice"] = totalPrice;
-            ViewData["whatisthis"] = anotherCartList;
-
-            //foreach (var thingy in anotherCartList)
-            //{
-            //    Console.WriteLine(thingy.ProductName + " " + thingy.Price);
-            //}
-
-            return View();
-        } 
-
-        [Route("addtocart/{id}")]
-        public IActionResult AddToCart(string id)
-        {
-            string userid = "991A7B0D-E236-4E07-DE0B-08D98EF0D7D7";
-            Cart cart = dbContext.Carts.FirstOrDefault(x => x.UserId == Guid.Parse(userid) && x.ProductId == Guid.Parse(id));
-            
-            if (cart == null)
-            {
-                dbContext.Carts.Add(new Cart
-                {
-                    UserId = Guid.Parse(userid),
-                    ProductId = Guid.Parse(id),
-                    Quantity = 1
-                }
-                ) ;
-
-                dbContext.SaveChanges();
-            }
-            else
-            {
-                cart.Quantity++;
-
-                dbContext.SaveChanges();
-            }    
-
-            return RedirectToAction("Index");
-        } 
-
-        [Route("issuetemp")]
-        public void IssueTest()
-        {
-
-            string SessionID = "820B2B6A-2286-48B6-BB91-08D98F8B36C7";
-            Response.Cookies.Append("SessionId", SessionID);
-        } */
-
     }
 }

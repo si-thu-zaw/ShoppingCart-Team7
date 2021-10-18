@@ -36,7 +36,5 @@ namespace ShoppingCart_Team7.Controllers
             return View();
 
         }
-
-        
     }
 }
