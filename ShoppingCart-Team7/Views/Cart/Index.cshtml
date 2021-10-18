@@ -33,11 +33,21 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <h5>@item.ProductName</h5>
-
                                             </div>
                                             <div>
-                                                <form action="~/changequantity"><input type="hidden" name="id" value="@item.CartID" /><input type="number" name="quantity" min="1" value="@item.Quantity" />      <input type="submit" value="Change Quantity"></form>
-
+                                                <form action="~/changequantity">
+                                                    <div class="ac_row">
+                                                        <div class="ac_cell">
+                                                            <input type="hidden" name="id" value="@item.CartID" />
+                                                        </div>
+                                                        <div class="ac_cell">
+                                                            <input type="number" name="quantity" min="1" value="@item.Quantity" />
+                                                        </div>
+                                                        <div class="ac_cell">
+                                                            <input type="submit" value="Change Quantity">
+                                                        </div>
+                                                    </div>
+                                                 </form>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">

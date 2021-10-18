@@ -5,6 +5,7 @@
     List<Product> products = (List<Product>)ViewData["products"];
     List<PurchaseCodes> codes = (List<PurchaseCodes>)ViewData["codes"];
     List<Review> reviews = (List<Review>)ViewData["reviews"];
+    int tab = (int)ViewData["id"];
     int pdtCount = codes.Count();
 
     string searchStr = (string)ViewData["searchStr"];
@@ -50,15 +51,44 @@
 
 <!-- Nav Menu -->
 <ul class="nav nav-tabs mt-3">
-    <li class="nav-item">
-        <a class="nav-link active" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="1">All (@pdtCount)</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="2">Last Month</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="3">Last Year</a>
-    </li>
+    @{
+        if (tab == 2)
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="1">All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="2">Last Month (@pdtCount)</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="3">Last Year</a>
+            </li>
+        }
+        else if (tab == 3)
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="1">All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="2">Last Month</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="3">Last Year (@pdtCount)</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link active" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="1">All (@pdtCount)</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="2">Last Month</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-action="Index" asp-controller="MyPurchase" asp-route-id="3">Last Year</a>
+            </li>
+        }
+    }
 </ul>
 
 @if (TempData["SuccessMessage"] != null)
