@@ -1,15 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Cart";
     float totalPrice = (float)ViewData["totalprice"];
-    List<CartItems> CartList = (List<CartItems>)ViewData["CartList"];
-   <h5>Cart (<span>@CartList.Count()</span> items)</h5>
+    List<CartItems> CartList = (List<CartItems>)ViewData["CartList"]; }
+    <h5>Cart (<span>@CartList.Count()</span> items)</h5>
 
-    if (CartList.Count() == 0)
-            {
-                <h5>Hey! Your cart is empty.</h5>
-    }
-    foreach (dynamic item in CartList)
-    {
+    <div class="container">
+        @if (CartList.Count() == 0)
+        {
+            <h5>Hey! Your cart is empty.</h5>
+        }
+        @foreach (dynamic item in CartList)
+        {
         float summaryPrice = item.Price * item.Quantity;
         <section>
 
@@ -24,7 +25,7 @@
                             <div class="row mb-23">
                                 <div class="col-md-5 col-lg-3 col-xl-3">
                                     <div class="rounded mb-3 mb-md-0">
-                                        <img class="img-fluid w-75 h-75" 
+                                        <img class="img-fluid w-75 h-75"
                                              src=@item.ProductImg>
                                     </div>
                                 </div>
@@ -47,7 +48,7 @@
                                                             <input type="submit" value="Change Quantity">
                                                         </div>
                                                     </div>
-                                                 </form>
+                                                </form>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
@@ -75,59 +76,60 @@
 
 
 
-    }
-    if (CartList.Count() > 0)
-    { 
+        }
+        if (CartList.Count() > 0)
+        {
         <div class="col-lg-4">
 
 
-                    <div class="mb-3">
-                        <div class="pt-4">
+            <div class="mb-3">
+                <div class="pt-4">
 
-                            <h5 class="mb-3">Summary</h5>
+                    <h5 class="mb-3">Summary</h5>
 
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                    <div>
-                                        <strong>Total</strong>
-                                    </div>
-                                    <span><strong>@string.Format($"{totalPrice:$#,##0.00}")</strong></span>
-                                </li>
-                            </ul>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                            <div>
+                                <strong>Total</strong>
+                            </div>
+                            <span><strong>@string.Format($"{totalPrice:$#,##0.00}")</strong></span>
+                        </li>
+                    </ul>
 
-                            <a class="nav-link text-light btn btn-primary btn-block" asp-area="" asp-controller="Cart" asp-action="Checkout"><strong>Checkout</strong></a>
-                            <a class="nav-link text-light btn btn-primary btn-block" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
+                    <a class="nav-link text-light btn btn-primary btn-block" asp-area="" asp-controller="Cart" asp-action="Checkout"><strong>Checkout</strong></a>
+                    <a class="nav-link text-light btn btn-primary btn-block" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
 
-                        </div>
-                   </div>
-                 
                 </div>
+            </div>
 
-    }
-    else
-    {
+        </div>
+
+        }
+        else
+        {
         <div class="col-lg-4">
 
-                    <div class="mb-3">
-                        <div class="pt-4">
+            <div class="mb-3">
+                <div class="pt-4">
 
-                            <h5 class="mb-3">Summary</h5>
+                    <h5 class="mb-3">Summary</h5>
 
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                    <div>
-                                        <strong>Total</strong>
-                                    </div>
-                                    <span><strong>$@totalPrice</strong></span>
-                                </li>
-                            </ul>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                            <div>
+                                <strong>Total</strong>
+                            </div>
+                            <span><strong>$@totalPrice</strong></span>
+                        </li>
+                    </ul>
 
-                            <a class="nav-link text-light btn btn-primary btn-block disabled" asp-area="" asp-controller="Cart" asp-action="Checkout"><strong>Checkout</strong></a>
-                            <a class="nav-link text-light btn btn-primary btn-block" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
+                    <a class="nav-link text-light btn btn-primary btn-block disabled" asp-area="" asp-controller="Cart" asp-action="Checkout"><strong>Checkout</strong></a>
+                    <a class="nav-link text-light btn btn-primary btn-block" asp-area="" asp-controller="Gallery" asp-action="Index">Continue Shopping</a>
 
-                        </div>
-                   </div>
-                 </div>
+                </div>
+            </div>
+        </div>
 
-    }
-}
+        }
+        }
+    </div>
