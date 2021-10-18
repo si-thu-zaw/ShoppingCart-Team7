@@ -88,7 +88,7 @@ namespace ShoppingCart_Team7.Controllers
 
 
             ViewData["codes"] = codes;
-
+            ViewData["id"] = id;
             ViewData["purchases"] = sortPurchases;
             ViewData["products"] = products;
             ViewData["reviews"] = reviews;
