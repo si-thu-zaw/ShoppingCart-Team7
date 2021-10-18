@@ -99,7 +99,7 @@ namespace ShoppingCart_Team7.Controllers
 
         public List<Purchase> Sort(List<Purchase> p, List<Product> pdt, int id)
         {
-            DateTime today = DateTime.Today;
+            DateTime today = DateTime.Today.AddDays(1);
             DateTime endMonth = DateTime.Today.AddDays(-30);
             DateTime endYear = DateTime.Today.AddYears(-1);
 
@@ -229,7 +229,7 @@ namespace ShoppingCart_Team7.Controllers
                 searchStr = "";
             }
             string searchStrLower = searchStr.ToLower();
-            string username = "charles";
+            string username = Request.Cookies["Username"];
             User Buyer = dbContext.Users.FirstOrDefault(u => u.UserName == username);
 
             List<Product> products = dbContext.Products.Where(x => x.ProductName.ToLower().Contains(searchStrLower)).ToList();
@@ -253,7 +253,9 @@ namespace ShoppingCart_Team7.Controllers
                                                               {
                                                                   PID_PDATE = grp.Key.ToString(),
                                                                   ActivationCodes = grp.Select(a => a.ActivationCode).ToList(),
-                                                                  Quantity = grp.Select(a => a.ActivationCode).Count()
+                                                                  Quantity = grp.Select(a => a.ActivationCode).Count(),
+                                                                  Date = grp.Key.PurchaseDate,
+                                                                  PurchaseIDs = grp.Select(a => a.Id).ToList()
                                                               }).ToList();
 
             ViewData["codes"] = codes;
